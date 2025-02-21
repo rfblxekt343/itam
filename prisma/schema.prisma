@@ -1,0 +1,87 @@
+// schema.prisma
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Hero {
+  id                      String    @id @default(auto()) @map("_id") @db.ObjectId
+  timestamp              String    @map("חותמת זמן")
+  email                  String    @map("כתובת אימייל")
+  fullName               String    @map("שם מלא")
+  lastName               String?   @map("שם משפחה")
+  gender                 String    @map("מגדר")
+  birthDate              String    @map("תאריך לידה")
+  age                    Int       @map("גיל")
+  city                   String    @map("עיר מגורים")
+  biography              String    @map("ביוגרפיה")
+  instagramLink          String?   @map("קישור לעמוד הנצחה באינסטגרם (אם קיים)")
+  rank                   String    @map("דרגה")
+  unit                   String    @map("יחידה")
+  role                   String    @map("תפקיד")
+  fallLocation           String    @map("מקום/אירוע הנפילה")
+  fallDate               String?   @map("תאריך נפילה")
+  specialTraining        String    @map("הכשרות מיוחדות")
+  operations             String    @map("מבצעים שהשתתף/ה בהם")
+  commendations          String?   @map("צל\"שים והוקרות")
+  
+  story1Title            String?   @map("סיפור 1  -  כותרת")
+  story1Content          String?   @map("סיפור 1 - תוכן")
+  story1TellerName       String?   @map("סיפור 1 - שם המספר ")
+  story1Relation         String?   @map("סיפור 1  - הקשר לחלל")
+  
+  story2Title            String?   @map("סיפור 2  -  כותרת")
+  story2Content          String?   @map("סיפור 2 - תוכן ")
+  story2TellerName       String?   @map("סיפור 2 - שם המספר")
+  story2Relation         String?   @map("סיפור 2 - הקשר לחלל")
+  
+  story3Title            String?   @map("סיפור 3  -  כותרת")
+  story3Content          String?   @map("סיפור 3 - תוכן")
+  story3TellerName       String?   @map("סיפור 3 - שם המספר ")
+  story3Relation         String?   @map("סיפור 3 - קשר לחלל")
+  
+  story4Title            String?   @map("סיפור 4  -  כותרת")
+  story4Content          String?   @map("סיפור 4 - תוכן ")
+  story4TellerName       String?   @map("סיפור 4 - שם המספר")
+  story4Relation         String?   @map("סיפור 4 - הקשר לחלל")
+  
+  story5Title            String?   @map("סיפור 5  -  כותרת")
+  story5Content          String?   @map("סיפור 5 - תוכן")
+  story5TellerName       String?   @map("סיפור 5 - שם מספר")
+  story5Relation         String?   @map("סיפור 5 - הקשר לחלל")
+  
+  photos                 String    @map("העלאת תמונות ( GIF, PNG ,JPG)")
+  eventDate              String    @map("תאריך האירוע")
+  eventTitle             String    @map("כותרת האירוע")
+  eventDescription       String    @map("תיאור")
+  eventMedia             String    @map("תמונה או סרטון")
+  
+  favoriteSongs          String    @map("שירים שאהב/ה במיוחד ( יש לציין אם שם הזמר או המלחין)")
+  favoriteBooks          String    @map("ספרים משמעותיים עבורה")
+  favoriteMovies         String    @map("סרטים אהובים")
+  favoritePlaces         String    @map("מקומות אהובים ומשמעותיים")
+  quotes                 String    @map("ציטוטים ")
+  leadingValues          String    @map("ערכים מובילים")
+  hobbies                String    @map("תחביבים וכישרונות")
+  
+  impactStory           String?   @map("סיפור השפעה")
+  impactStoryTeller     String?   @map("שם המספר")
+  impactStoryRelation   String?   @map("קשר לחלל")
+  
+  additionalImpactStory String?   @map("סיפור השפעה - 2 ")
+  additionalImpactStoryTeller String?   @map("שם המספר - 2")
+  additionalImpactStoryRelation String?   @map("קשר לחלל - 2")
+  
+  contactFullName       String?   @map("שם מלא ")
+  contactEmail         String?   @map("אימייל ")
+  contactPhone         String?   @map("טלפון ")
+  
+  version              Int       @map("__v") @default(0)
+
+  @@map("heroes")
+}
