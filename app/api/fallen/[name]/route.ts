@@ -1,63 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export interface FallenHero {
-  id: string;
-  timestamp: string;
-  email: string;
-  fullName: string;
-  lastName?: string;
-  gender: string;
-  birthDate: string;
-  age: number;
-  city: string;
-  biography: string;
-  instagramLink?: string;
-  rank: string;
-  unit: string;
-  role: string;
-  fallLocation: string;
-  specialTraining: string;
-  operations: string;
-  commendations?: string;
-  dateOfFalling?: string;
-  stories: {
-    title?: string;
-    content: string;
-    tellerName?: string;
-    relation?: string;
-  }[];
-  photos: string;
-  eventDate: string;
-  eventTitle: string;
-  eventDescription: string;
-  eventMedia: string;
-  favoriteSongs: string;
-  favoriteBooks: string;
-  favoriteMovies: string;
-  favoritePlaces: string;
-  quotes: string;
-  leadingValues: string;
-  hobbies: string;
-  impactStory?: string;
-  impactStoryTeller?: string;
-  impactStoryRelation?: string;
-  additionalImpactStory?: string;
-  additionalimpactStoryTeller?: string;
-  additionalimpactStoryRelation?: string;
-  contactFullName?: string;
-  contactEmail?: string;
-  contactPhone?: string;
-  version: number;
-}
-
 export async function GET(
-  request: NextRequest,
+  request: Request,
   { params }: { params: { name: string } }
 ) {
   try {
-    const { name } = params;
-
+    const { name } = await params;
+    
     if (!name || name === 'undefined' || name === 'null') {
       return NextResponse.json(
         { error: 'Invalid hero ID' },
@@ -104,10 +54,11 @@ export async function GET(
       specialTraining: hero.specialTraining,
       operations: hero.operations,
       commendations: hero.commendations,
-
+    
+      // Stories array
       stories: [
         hero.story1Content && {
-          title: hero.story1Title || "",
+          title: hero.story1Title || "", // Ensure title is included
           content: hero.story1Content,
           tellerName: hero.story1TellerName,
           relation: hero.story1Relation
@@ -136,8 +87,9 @@ export async function GET(
           tellerName: hero.story5TellerName,
           relation: hero.story5Relation
         }
-      ].filter(Boolean),
-
+      ].filter(Boolean), // Remove undefined stories
+    
+      // Impact stories
       impactStories: [
         hero.impactStory && {
           content: hero.impactStory,
@@ -150,19 +102,22 @@ export async function GET(
           relation: null
         }
       ].filter(Boolean),
-
+    
+      // Contact information
       contact: hero.contactFullName ? {
         fullName: hero.contactFullName,
         email: hero.contactEmail,
         phone: hero.contactPhone
       } : null,
-
+    
+      // Media
       photos: hero.photos,
       eventMedia: hero.eventMedia
     };
+    
 
     return NextResponse.json(transformedHero);
-
+    
   } catch (error) {
     console.error('Detailed error in /api/fallen/[id]:', {
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -177,7 +132,7 @@ export async function GET(
           { status: 500 }
         );
       }
-
+      
       return NextResponse.json(
         { error: error.message },
         { status: 500 }
