@@ -21,20 +21,17 @@ export interface FallenHero {
   operations: string;
   commendations?: string;
   dateOfFalling?: string;
-  
   stories: {
     title?: string;
     content: string;
     tellerName?: string;
     relation?: string;
   }[];
-  
   photos: string;
   eventDate: string;
   eventTitle: string;
   eventDescription: string;
   eventMedia: string;
-  
   favoriteSongs: string;
   favoriteBooks: string;
   favoriteMovies: string;
@@ -42,30 +39,22 @@ export interface FallenHero {
   quotes: string;
   leadingValues: string;
   hobbies: string;
-  
   impactStory?: string;
   impactStoryTeller?: string;
   impactStoryRelation?: string;
-  
   additionalImpactStory?: string;
   additionalimpactStoryTeller?: string;
   additionalimpactStoryRelation?: string;
-  
   contactFullName?: string;
   contactEmail?: string;
   contactPhone?: string;
-  
   version: number;
 }
 
-type Context = {
-  params: { name: string }
-}
-
 export async function GET(
-  _request: NextRequest,
-  { params }: Context
-): Promise<NextResponse> {
+  request: NextRequest,
+  { params }: { params: { name: string } }
+) {
   try {
     const { name } = params;
 
