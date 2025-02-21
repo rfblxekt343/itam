@@ -1,12 +1,19 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+interface RouteSegment {
+  params: {
+    name: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
 export async function GET(
-  request: Request,
-  { params }: { params: { name: string } }
+  req: NextRequest,
+  { params }: RouteSegment
 ) {
   try {
-    const { name } = await params;
+    const { name } = params;
     
     if (!name || name === 'undefined' || name === 'null') {
       return NextResponse.json(
@@ -55,10 +62,9 @@ export async function GET(
       operations: hero.operations,
       commendations: hero.commendations,
     
-      // Stories array
       stories: [
         hero.story1Content && {
-          title: hero.story1Title || "", // Ensure title is included
+          title: hero.story1Title || "",
           content: hero.story1Content,
           tellerName: hero.story1TellerName,
           relation: hero.story1Relation
@@ -87,9 +93,8 @@ export async function GET(
           tellerName: hero.story5TellerName,
           relation: hero.story5Relation
         }
-      ].filter(Boolean), // Remove undefined stories
+      ].filter(Boolean),
     
-      // Impact stories
       impactStories: [
         hero.impactStory && {
           content: hero.impactStory,
@@ -103,18 +108,15 @@ export async function GET(
         }
       ].filter(Boolean),
     
-      // Contact information
       contact: hero.contactFullName ? {
         fullName: hero.contactFullName,
         email: hero.contactEmail,
         phone: hero.contactPhone
       } : null,
     
-      // Media
       photos: hero.photos,
       eventMedia: hero.eventMedia
     };
-    
 
     return NextResponse.json(transformedHero);
     
