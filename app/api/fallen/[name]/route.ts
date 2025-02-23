@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-interface RouteSegment {
-  params: {
-    name: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
+// interface RouteSegment {
+//   params: {
+//     name: string;
+//   };
+//   searchParams: { [key: string]: string | string[] | undefined };
+// }
 
 export async function GET(
   req: NextRequest,
-  { params }: RouteSegment
+  { params }: { params: { name: string } }
 ) {
   try {
     const { name } = params;
