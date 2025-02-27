@@ -1,5 +1,3 @@
-// app/api/search/route.ts
-
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
@@ -40,13 +38,14 @@ export async function GET(request: Request) {
     const results = heroes.map(hero => ({
       id: hero.id,
       name: hero.fullName,
-      unit: hero.unit,
-      rank: hero.role, // Mapping role to rank as per your interface
-      city: hero.city,
-      placeOfFalling: hero.fallLocation,
-      specialTraining: [hero.specialTraining], // Converting to array as per interface
-      operations: [hero.operations], // Converting to array as per interface
-      slug: hero.fullName.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-\u0590-\u05FF]+/g, '')
+      // unit: hero.unit,
+      // rank: hero.role, // Mapping role to rank as per your interface
+      // city: hero.city,
+      // placeOfFalling: hero.fallLocation,
+      // specialTraining: [hero.specialTraining], // Converting to array as per interface
+      // operations: [hero.operations], // Converting to array as per interface
+      // Generate a safe URL slug for navigation
+      slug: encodeURIComponent(hero.fullName.trim())
     }))
 
     return NextResponse.json({ results })

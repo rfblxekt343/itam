@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-// interface RouteSegment {
-//   params: {
-//     name: string;
-//   };
-//   searchParams: { [key: string]: string | string[] | undefined };
-// }
-
 export async function GET(
   req: NextRequest,
   { params }: { params: { name: string } }
@@ -22,45 +15,115 @@ export async function GET(
       );
     }
 
-    const decodedId = decodeURIComponent(name);
-    const normalizedId = decodedId.replace(/-/g, ' ').trim();
+    const decodedName = decodeURIComponent(name).trim();
 
-    const query = {
+
+   
+    // First try exact match
+    let hero = await prisma.hero.findFirst({
       where: {
         fullName: {
-          equals: normalizedId,
-          mode: 'insensitive' as const
+          equals: decodedName,
+          mode: 'insensitive'
         }
       }
-    };
+    });
 
-    const hero = await prisma.hero.findFirst(query);
+    // If no results, try with contains
+    if (!hero) {
+      console.log("Exact match not found, trying contains search");
+      hero = await prisma.hero.findFirst({
+        where: {
+          fullName: {
+            contains: decodedName,
+            mode: 'insensitive'
+          }
+        }
+      });
+    }
+
+    // If still no results, try without parentheses
+    if (!hero) {
+      console.log("Contains search failed, trying without parentheses");
+      
+      // Remove parentheses and normalize spaces
+      const simplifiedName = decodedName.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
+      
+      console.log("Simplified name for search:", simplifiedName);
+      
+      hero = await prisma.hero.findFirst({
+        where: {
+          fullName: {
+            contains: simplifiedName,
+            mode: 'insensitive'
+          }
+        }
+      });
+    }
+
+    // Try to match by first name if all else fails
+    if (!hero) {
+      console.log("Trying to match by first name only");
+      const firstNameOnly = decodedName.split(' ')[0].trim();
+      
+      hero = await prisma.hero.findFirst({
+        where: {
+          fullName: {
+            contains: firstNameOnly,
+            mode: 'insensitive'
+          }
+        }
+      });
+    }
 
     if (!hero) {
+      console.log("Hero not found after all attempts");
       return NextResponse.json(
         { error: 'Hero not found' },
         { status: 404 }
       );
     }
 
+
+
+
+    // Create a transformed hero that matches the FallenHero interface
+    // Provide default values for missing fields
     const transformedHero = {
       id: hero.id,
+      timestamp: hero.timestamp || new Date().toISOString(), // Default current time if missing
+      email: hero.email || "", // Default empty string if missing
       firstName: hero.fullName.split(' ')[0],
       lastName: hero.lastName || hero.fullName.split(' ').slice(1).join(' '),
       fullName: hero.fullName,
-      gender: hero.gender,
-      birthDate: hero.birthDate,
-      rank: hero.rank,
-      unit: hero.unit,
-      role: hero.role,
-      dateOfFalling: hero.fallDate,
-      age: hero.age,
-      city: hero.city,
-      biography: hero.biography,
+      gender: hero.gender || "",
+      birthDate: hero.birthDate || "",
+      rank: hero.rank || "",
+      unit: hero.unit || "",
+      role: hero.role || "",
+      fallLocation: hero.fallLocation || "", // Required field
+      dateOfFalling: hero.fallDate || "",
+      age: hero.age || 0,
+      city: hero.city || "",
+      biography: hero.biography || "",
       instagramLink: hero.instagramLink,
-      specialTraining: hero.specialTraining,
-      operations: hero.operations,
+      specialTraining: hero.specialTraining || "",
+      operations: hero.operations || "",
       commendations: hero.commendations,
+      
+      // Event details - required fields with defaults
+      eventDate: hero.eventDate || "",
+      eventTitle: hero.eventTitle || "",
+      eventDescription: hero.eventDescription || "",
+      
+      // Personal preferences
+      favoriteSongs: hero.favoriteSongs || "",
+      favoriteBooks: hero.favoriteBooks || "",
+      favoriteMovies: hero.favoriteMovies || "",
+      favoritePlaces: hero.favoritePlaces || "",
+      quotes: hero.quotes || "",
+      leadingValues: hero.leadingValues || "",
+      hobbies: hero.hobbies || "",
     
       stories: [
         hero.story1Content && {
@@ -103,8 +166,9 @@ export async function GET(
         },
         hero.additionalImpactStory && {
           content: hero.additionalImpactStory,
-          tellerName: null,
-          relation: null
+          tellerName: hero.additionalImpactStoryTeller, 
+          relation: hero.additionalImpactStoryRelation
+          
         }
       ].filter(Boolean),
     
@@ -114,8 +178,11 @@ export async function GET(
         phone: hero.contactPhone
       } : null,
     
-      photos: hero.photos,
-      eventMedia: hero.eventMedia
+      photos: hero.photos || "",
+      eventMedia: hero.eventMedia || "",
+      
+      // Required by interface
+      version: hero.version || 1
     };
 
     return NextResponse.json(transformedHero);

@@ -7,6 +7,7 @@ interface InfoTabProps {
 }
 
 export function InfoTab({ hero }: InfoTabProps) {
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('he-IL', {
@@ -16,10 +17,14 @@ export function InfoTab({ hero }: InfoTabProps) {
     });
   };
 
+  console.log("Hero biography:", hero.biography || 'Biography not available');
+
+
+
   return (
     <Card className="bg-white shadow-lg">
       <CardContent className="p-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8" dir="rtl">
           {/* Info Fields */}
           <div className="space-y-2 bg-gray-50 p-4 rounded-lg">
             <h3 className="text-lg font-bold text-gray-700 mb-1">שם מלא</h3>

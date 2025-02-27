@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Search, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { SearchResult, createSlug, formatSearchResult } from '@/lib/search-utils'
+import { SearchResult, formatSearchResult } from '@/lib/search-utils'
 
 const Searchbar = () => {
   const router = useRouter()
@@ -27,7 +27,7 @@ const Searchbar = () => {
       try {
         const response = await fetch(`/api/search?q=${encodeURIComponent(searchValue)}`)
         if (!response.ok) throw new Error('Search failed')
-        
+
         const data = await response.json()
         setResults(data.results)
       } catch (error) {
@@ -51,14 +51,13 @@ const Searchbar = () => {
     setIsExpanded(false)
   }
 
+  // In your Searchbar.tsx when handling result click
   const handleResultClick = (result: SearchResult) => {
-    const slug = result.slug || createSlug(result.name)
-    router.push(`/hero/${slug}`)
-    setSearchValue('')
-    setResults([])
-    setIsExpanded(false)
+    router.push(`/hero/${result.slug}`);
+    setSearchValue('');
+    setResults([]);
+    setIsExpanded(false);
   }
-
   return (
     <div className="flex justify-center items-center p-4">
       <div className="relative">
@@ -111,7 +110,7 @@ const Searchbar = () => {
                 מחפש...
               </div>
             )}
-            
+
             {error && (
               <div className="px-4 py-2 text-red-500 text-right">
                 {error}

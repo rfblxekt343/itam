@@ -20,7 +20,20 @@ export function GalleryTab({ hero }: GalleryTabProps) {
       const images = [
         `${folderPath}/photo1.jpg`,
         `${folderPath}/photo2.jpg`,
-        `${folderPath}/photo3.jpg`
+        `${folderPath}/photo3.jpg`,
+        `${folderPath}/photo4.jpg`,
+        `${folderPath}/photo5.jpg`,
+        `${folderPath}/photo6.jpg`,
+        `${folderPath}/photo7.jpg`,
+        `${folderPath}/photo8.jpg`,
+        `${folderPath}/photo9.jpg`,
+        `${folderPath}/photo10.jpg`,
+        `${folderPath}/photo11.jpg`,
+        `${folderPath}/photo12.jpg`,
+        `${folderPath}/photo13.jpg`,
+        `${folderPath}/photo14.jpg`,
+        `${folderPath}/photo15.jpg`,
+        `${folderPath}/photo16.jpg`,
       ];
       setPhotoUrls(images);
     }

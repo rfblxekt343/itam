@@ -1,5 +1,3 @@
-// app/hero/[name]/HeroContent.tsx
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -14,6 +12,7 @@ import { ServiceTab } from "@/components/hero-tabs/ServiceTab";
 import { StoriesTab } from "@/components/hero-tabs/StoriesTab";
 import { GalleryTab } from "@/components/hero-tabs/GalleryTab";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface HeroContentProps {
     params: {
@@ -29,7 +28,6 @@ export function HeroContent({ params }: HeroContentProps) {
 
     useEffect(() => {
         const fetchHero = async () => {
-            // Add validation before making the API call
             if (!params.name || params.name === 'undefined') {
                 setError('Invalid hero ID');
                 setIsLoading(false);
@@ -39,7 +37,8 @@ export function HeroContent({ params }: HeroContentProps) {
             setError(null);
 
             try {
-                const response = await fetch(`/api/fallen/${params.name}`);
+                const decodedName = decodeURIComponent(params.name);
+                const response = await fetch(`/api/fallen/${decodedName}`);
 
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -59,15 +58,22 @@ export function HeroContent({ params }: HeroContentProps) {
         fetchHero();
     }, [params.name]);
 
+    // Animation variants for tab content
+    const tabContentVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+        exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" } }
+    };
+
     if (isLoading) return <LoadingSpinner />;
 
     if (error) {
         return (
-            <div className="text-center p-8">
-                <div className="text-red-600 text-xl">שגיאה: {error}</div>
+            <div className="text-center p-4 md:p-8">
+                <div className="text-red-600 text-lg md:text-xl">שגיאה: {error}</div>
                 <button
                     onClick={() => window.location.reload()}
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 transition-colors duration-300"
                 >
                     נסה שוב
                 </button>
@@ -77,65 +83,74 @@ export function HeroContent({ params }: HeroContentProps) {
 
     if (!hero) {
         return (
-            <div className="text-center p-8">
-                <div className="text-xl">לא נמצא מידע על הגיבור המבוקש</div>
+            <div className="text-center p-4 md:p-8">
+                <div className="text-lg md:text-xl">לא נמצא מידע על הגיבור המבוקש</div>
             </div>
         );
     }
 
+    // Function to render tab content with animation
+    const renderTabContent = (tabValue, Component) => (
+        <TabsContent value={tabValue} className="outline-none">
+            <AnimatePresence mode="wait">
+                {activeTab === tabValue && (
+                    <motion.div
+                        key={tabValue}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={tabContentVariants}
+                        className="focus:outline-none"
+                    >
+                        <Component hero={hero} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </TabsContent>
+    );
+
     return (
-        <div className="text-lime-600 max-w-6xl mx-auto p-8">
-            <header className="text-center mb-12">
-                <h1 className="text-4xl font-bold mb-4">הכירו את {hero.fullName}</h1>
+        <div className="text-lime-600 max-w-6xl mx-auto p-4 md:p-8">
+            <header className="text-center mb-6 md:mb-12">
+                <h1 className="text-3xl md:text-4xl font-bold mb-4">הכירו את {hero.fullName}</h1>
             </header>
 
-
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 mb-8">
-                    <TabsTrigger value="info">
-                        <Heart className="mr-2" /> מידע אישי
-                    </TabsTrigger>
-                    <TabsTrigger value="milestones">
-                        <Milestone className="mr-2" /> אבני דרך
-                    </TabsTrigger>
-                    <TabsTrigger value="world">
-                        <Star className="mr-2" /> העולם שלו/ה
-                    </TabsTrigger>
-                    <TabsTrigger value="impact">
-                        <Users className="mr-2" /> השפעה על אחרים
-                    </TabsTrigger>
-                    <TabsTrigger value="service">
-                        <Medal className="mr-2" /> שירות צבאי
-                    </TabsTrigger>
-                    <TabsTrigger value="stories">
-                        <BookOpen className="mr-2" /> סיפורים וזכרונות
-                    </TabsTrigger>
-                    <TabsTrigger value="gallery">
-                        <Camera className="mr-2" /> גלריה
-                    </TabsTrigger>
-                </TabsList>
+                <div className="overflow-x-auto pb-2">
+                    <TabsList className="flex md:grid w-full md:grid-cols-3 lg:grid-cols-7 gap-2 mb-6 md:mb-8 min-w-max">
+                        {[
+                            { value: "info", icon: <Heart className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "מידע אישי" },
+                            { value: "milestones", icon: <Milestone className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "אבני דרך" },
+                            { value: "world", icon: <Star className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "העולם שלו/ה" },
+                            { value: "impact", icon: <Users className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "השפעה על אחרים" },
+                            { value: "service", icon: <Medal className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "שירות צבאי" },
+                            { value: "stories", icon: <BookOpen className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "סיפורים וזכרונות" },
+                            { value: "gallery", icon: <Camera className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "גלריה" }
+                        ].map(tab => (
+                            <TabsTrigger
+                                key={tab.value}
+                                value={tab.value}
+                                className={`whitespace-nowrap transition-all duration-300 ease-in-out text-sm md:text-base px-3 py-2 md:px-4 md:py-2 ${
+                                    activeTab === tab.value 
+                                        ? "bg-lime-500 text-white shadow-md transform scale-105" 
+                                        : "text-lime-600 hover:bg-lime-100"
+                                }`}
+                            >
+                                <span className="flex items-center">
+                                    {tab.icon} {tab.label}
+                                </span>
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
+                </div>
 
-                <TabsContent value="info">
-                    <InfoTab hero={hero} />
-                </TabsContent>
-                <TabsContent value="milestones">
-                    <MilestonesTab hero={hero} />
-                </TabsContent>
-                <TabsContent value="world">
-                    <WorldTab hero={hero} />
-                </TabsContent>
-                <TabsContent value="impact">
-                    <ImpactTab hero={hero} />
-                </TabsContent>
-                <TabsContent value="service">
-                    <ServiceTab hero={hero} />
-                </TabsContent>
-                <TabsContent value="stories">
-                    <StoriesTab hero={hero} />
-                </TabsContent>
-                <TabsContent value="gallery">
-                    <GalleryTab hero={hero} />
-                </TabsContent>
+                {renderTabContent("info", InfoTab)}
+                {renderTabContent("milestones", MilestonesTab)}
+                {renderTabContent("world", WorldTab)}
+                {renderTabContent("impact", ImpactTab)}
+                {renderTabContent("service", ServiceTab)}
+                {renderTabContent("stories", StoriesTab)}
+                {renderTabContent("gallery", GalleryTab)}
             </Tabs>
         </div>
     );
