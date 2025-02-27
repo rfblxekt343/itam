@@ -3,10 +3,9 @@ import React from 'react';
 import Searchbar from '@/components/Searchbar';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-
 export default function Home() {
-  
- 
+
+
   return (
     <main
       className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-lime-50 via-sky-50 to-indigo-50 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
@@ -15,13 +14,13 @@ export default function Home() {
     >
       {/* Refined background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div 
+        <div
           className="absolute w-[200px] sm:w-[500px] h-[200px] sm:h-[500px] -right-24 sm:-right-48 -top-24 sm:-top-48 
-                     bg-lime-100 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl opacity-30 animate-pulse" 
+                     bg-lime-100 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl opacity-30 animate-pulse"
         />
-        <div 
+        <div
           className="absolute w-[200px] sm:w-[500px] h-[200px] sm:h-[500px] -left-24 sm:-left-48 -bottom-24 sm:-bottom-48 
-                     bg-indigo-100 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl opacity-30 animate-pulse delay-1000" 
+                     bg-indigo-100 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl opacity-30 animate-pulse delay-1000"
         />
       </div>
 
@@ -92,7 +91,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-r from-lime-500 to-lime-600 opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
             </button>
           </Link>
-       
+
           <Link href="/contact-us" className="w-full sm:w-auto">
             <button
               className="w-full sm:w-auto px-8 py-4 sm:py-3 bg-white/80 backdrop-blur-sm border-2 border-lime-400 

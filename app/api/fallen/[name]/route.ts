@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { name } = params;
-    
+
     if (!name || name === 'undefined' || name === 'null') {
       return NextResponse.json(
         { error: 'Invalid hero ID' },
@@ -18,7 +18,7 @@ export async function GET(
     const decodedName = decodeURIComponent(name).trim();
 
 
-   
+
     // First try exact match
     let hero = await prisma.hero.findFirst({
       where: {
@@ -45,12 +45,12 @@ export async function GET(
     // If still no results, try without parentheses
     if (!hero) {
       console.log("Contains search failed, trying without parentheses");
-      
+
       // Remove parentheses and normalize spaces
       const simplifiedName = decodedName.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
-      
+
       console.log("Simplified name for search:", simplifiedName);
-      
+
       hero = await prisma.hero.findFirst({
         where: {
           fullName: {
@@ -65,7 +65,7 @@ export async function GET(
     if (!hero) {
       console.log("Trying to match by first name only");
       const firstNameOnly = decodedName.split(' ')[0].trim();
-      
+
       hero = await prisma.hero.findFirst({
         where: {
           fullName: {
@@ -85,7 +85,7 @@ export async function GET(
     }
 
 
-
+    console.log("hero data", hero)
 
     // Create a transformed hero that matches the FallenHero interface
     // Provide default values for missing fields
@@ -110,12 +110,12 @@ export async function GET(
       specialTraining: hero.specialTraining || "",
       operations: hero.operations || "",
       commendations: hero.commendations,
-      
+
       // Event details - required fields with defaults
       eventDate: hero.eventDate || "",
       eventTitle: hero.eventTitle || "",
       eventDescription: hero.eventDescription || "",
-      
+
       // Personal preferences
       favoriteSongs: hero.favoriteSongs || "",
       favoriteBooks: hero.favoriteBooks || "",
@@ -124,7 +124,7 @@ export async function GET(
       quotes: hero.quotes || "",
       leadingValues: hero.leadingValues || "",
       hobbies: hero.hobbies || "",
-    
+
       stories: [
         hero.story1Content && {
           title: hero.story1Title || "",
@@ -157,36 +157,30 @@ export async function GET(
           relation: hero.story5Relation
         }
       ].filter(Boolean),
-    
-      impactStories: [
-        hero.impactStory && {
-          content: hero.impactStory,
-          tellerName: hero.impactStoryTeller,
-          relation: hero.impactStoryRelation
-        },
-        hero.additionalImpactStory && {
-          content: hero.additionalImpactStory,
-          tellerName: hero.additionalImpactStoryTeller, 
-          relation: hero.additionalImpactStoryRelation
-          
-        }
-      ].filter(Boolean),
-    
+
+      // Instead of creating an impactStories array
+      impactStory: hero.impactStory || "",
+      impactStoryTeller: hero.impactStoryTeller || "",
+      impactStoryRelation: hero.impactStoryRelation || "",
+      additionalImpactStory: hero.additionalImpactStory || "",
+      additionalimpactStoryTeller: hero.additionalImpactStoryTeller || "",
+      additionalimpactStoryRelation: hero.additionalImpactStoryRelation || "",
+
       contact: hero.contactFullName ? {
         fullName: hero.contactFullName,
         email: hero.contactEmail,
         phone: hero.contactPhone
       } : null,
-    
+
       photos: hero.photos || "",
       eventMedia: hero.eventMedia || "",
-      
+
       // Required by interface
       version: hero.version || 1
     };
 
     return NextResponse.json(transformedHero);
-    
+
   } catch (error) {
     console.error('Detailed error in /api/fallen/[id]:', {
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -201,7 +195,7 @@ export async function GET(
           { status: 500 }
         );
       }
-      
+
       return NextResponse.json(
         { error: error.message },
         { status: 500 }
