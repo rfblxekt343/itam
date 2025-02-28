@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { FallenHero } from "@/types/fallen-hero";
+import Image from "next/image";
 
 interface StoriesTabProps {
   hero: FallenHero;
@@ -15,6 +16,18 @@ export function StoriesTab({ hero }: StoriesTabProps) {
           <Card key={index} className="shadow-md rounded-xl overflow-hidden border border-gray-100">
             <CardContent className="p-6">
               <div className="space-y-4" dir="rtl">
+                {hero.fullName === "אושר (שמחה) ברזילי" && (
+                  <div className="w-full flex justify-center">
+                    <Image
+                      src={`/images/heroes/${encodeURIComponent(hero.fullName)}/photo4.jpeg`}
+                      alt={`תמונה של ${hero.fullName}`}
+                      width={200} 
+                      height={200} 
+                      className="rounded-lg object-cover"
+                    />
+                  </div>
+                )}
+
                 {(story.tellerName || story.relation) && (
                   <div className="text-right mb-3">
                     {story.tellerName && story.relation && (
