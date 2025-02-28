@@ -17,7 +17,7 @@ export function InfoTab({ hero }: InfoTabProps) {
     });
   };
 
-  console.log("Hero biography:", hero.biography || 'Biography not available');
+
 
   return (
     <Card className="bg-white shadow-lg">
