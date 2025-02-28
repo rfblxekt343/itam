@@ -53,11 +53,13 @@ const Searchbar = () => {
 
   // In your Searchbar.tsx when handling result click
   const handleResultClick = (result: SearchResult) => {
-    router.push(`/hero/${result.slug}`);
-    setSearchValue('');
-    setResults([]);
-    setIsExpanded(false);
+    // Route to the hero page
+    router.push(`/hero/${result.slug}`)
+    setSearchValue('')
+    setResults([])
+    setIsExpanded(false)
   }
+  
   return (
     <div className="flex justify-center items-center p-4">
       <div className="relative">
@@ -84,24 +86,17 @@ const Searchbar = () => {
               dir="rtl"
             `}
           />
-
-          <button
-            onClick={() => !isExpanded && setIsExpanded(true)}
-            className="absolute right-0 p-3 text-gray-600 dark:text-gray-400 hover:text-lime-500 dark:hover:text-lime-400 transition-colors duration-300"
-          >
+          <button onClick={() => !isExpanded && setIsExpanded(true)} className="absolute right-0 p-3 text-gray-600 dark:text-gray-400 hover:text-lime-500 dark:hover:text-lime-400 transition-colors duration-300">
             <Search size={20} />
           </button>
-
+  
           {searchValue && isExpanded && (
-            <button
-              onClick={handleClear}
-              className="absolute left-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-300"
-            >
+            <button onClick={handleClear} className="absolute left-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-300">
               <X size={18} />
             </button>
           )}
         </div>
-
+  
         {/* Search Results Dropdown */}
         {isExpanded && (results.length > 0 || error || isSearching) && (
           <div className="absolute top-14 right-0 w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
@@ -110,13 +105,11 @@ const Searchbar = () => {
                 מחפש...
               </div>
             )}
-
             {error && (
               <div className="px-4 py-2 text-red-500 text-right">
                 {error}
               </div>
             )}
-
             {results.map((result) => (
               <button
                 key={result.id}

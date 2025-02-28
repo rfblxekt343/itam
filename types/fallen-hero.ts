@@ -61,6 +61,8 @@ export interface FallenHero {
   contactFullName?: string;
   contactEmail?: string;
   contactPhone?: string;
+
+  photosNumber:number;
   
   version: number;
 }

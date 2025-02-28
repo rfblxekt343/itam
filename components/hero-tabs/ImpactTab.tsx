@@ -18,16 +18,6 @@ interface ExtendedFallenHero extends FallenHero {
 }
 
 export function ImpactTab({ hero }: ImpactTabProps) {
-  // Debug logging to help troubleshoot
-  console.log("Impact story data:", {
-    impactStory: hero.impactStory,
-    impactStoryTeller: hero.impactStoryTeller,
-    impactStoryRelation: hero.impactStoryRelation,
-    additionalImpactStory: hero.additionalImpactStory,
-    additionalimpactStoryTeller: hero.additionalimpactStoryTeller,
-    additionalimpactStoryRelation: hero.additionalimpactStoryRelation
-  });
-
   // Helper function to check if a story section has content
   const hasStoryContent = (story: string | undefined, teller: string | undefined, relation: string | undefined): boolean => {
     return (!!story && story.trim() !== "") || 
@@ -36,7 +26,6 @@ export function ImpactTab({ hero }: ImpactTabProps) {
   };
 
   // Check if the API transformation created impactStories array instead of individual fields
-  // This matches how the API is transforming impact stories in the code you provided
   if (hero.hasOwnProperty('impactStories') && Array.isArray((hero as ExtendedFallenHero).impactStories)) {
     const impactStories = (hero as ExtendedFallenHero).impactStories;
     
@@ -45,36 +34,36 @@ export function ImpactTab({ hero }: ImpactTabProps) {
     }
 
     return (
-      <div className="space-y-8">
+      <div className="space-y-6">
         {impactStories.map((story: ImpactStory, index: number) => (
-          <Card key={index} className="shadow-lg rounded-2xl overflow-hidden">
-            <CardContent className="p-8">
-              <div className="space-y-6">
-                <h2 className="text-xl font-bold text-gray-800 border-b pb-2">
+          <Card key={index} className="shadow-md rounded-xl overflow-hidden border border-gray-100">
+            <CardContent className="p-6">
+              <div className="space-y-4">
+                <h2 className="text-lg font-bold text-gray-800 mb-2">
                   {index === 0 ? "סיפור השפעה" : "סיפור השפעה נוסף"}
                 </h2>
                 
-                {story.content && story.content.trim() !== "" && (
-                  <div className="bg-gray-100 p-5 rounded-xl shadow-sm">
-                    <p className="text-gray-700 whitespace-pre-line">{story.content}</p>
+                {(story.tellerName || story.relation) && (
+                  <div className="text-right mb-3">
+                    {story.tellerName && story.relation && (
+                      <p className="font-semibold text-gray-700">{story.tellerName} • {story.relation}</p>
+                    )}
+                    
+                    {story.tellerName && !story.relation && (
+                      <p className="font-semibold text-gray-700">{story.tellerName}</p>
+                    )}
+                    
+                    {!story.tellerName && story.relation && (
+                      <p className="font-semibold text-gray-700">{story.relation}</p>
+                    )}
                   </div>
                 )}
                 
-                <div className="flex flex-col md:flex-row gap-4">
-                  {story.tellerName && story.tellerName.trim() !== "" && (
-                    <div className="bg-gray-100 p-5 rounded-xl shadow-sm flex-1">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-2">שם המספר</h3>
-                      <p className="text-gray-700">{story.tellerName}</p>
-                    </div>
-                  )}
-                  
-                  {story.relation && story.relation.trim() !== "" && (
-                    <div className="bg-gray-100 p-5 rounded-xl shadow-sm flex-1">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-2">קשר לחלל</h3>
-                      <p className="text-gray-700">{story.relation}</p>
-                    </div>
-                  )}
-                </div>
+                {story.content && story.content.trim() !== "" && (
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <p className="text-gray-700 whitespace-pre-line leading-relaxed">{story.content}</p>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -93,66 +82,66 @@ export function ImpactTab({ hero }: ImpactTabProps) {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {hasFirstStory && (
-        <Card className="shadow-lg rounded-2xl overflow-hidden">
-          <CardContent className="p-8">
-            <div className="space-y-6">
-              <h2 className="text-xl font-bold text-gray-800 border-b pb-2">סיפור השפעה</h2>
+        <Card className="shadow-md rounded-xl overflow-hidden border border-gray-100">
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold text-gray-800 mb-2">סיפור השפעה</h2>
               
-              {hero.impactStory && hero.impactStory.trim() !== "" && (
-                <div className="bg-gray-100 p-5 rounded-xl shadow-sm">
-                  <p className="text-gray-700 whitespace-pre-line">{hero.impactStory}</p>
+              {(hero.impactStoryTeller || hero.impactStoryRelation) && (
+                <div className="text-right mb-3">
+                  {hero.impactStoryTeller && hero.impactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.impactStoryTeller} • {hero.impactStoryRelation}</p>
+                  )}
+                  
+                  {hero.impactStoryTeller && !hero.impactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.impactStoryTeller}</p>
+                  )}
+                  
+                  {!hero.impactStoryTeller && hero.impactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.impactStoryRelation}</p>
+                  )}
                 </div>
               )}
               
-              <div className="flex flex-col md:flex-row gap-4">
-                {hero.impactStoryTeller && hero.impactStoryTeller.trim() !== "" && (
-                  <div className="bg-gray-100 p-5 rounded-xl shadow-sm flex-1">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">שם המספר</h3>
-                    <p className="text-gray-700">{hero.impactStoryTeller}</p>
-                  </div>
-                )}
-                
-                {hero.impactStoryRelation && hero.impactStoryRelation.trim() !== "" && (
-                  <div className="bg-gray-100 p-5 rounded-xl shadow-sm flex-1">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">קשר לחלל</h3>
-                    <p className="text-gray-700">{hero.impactStoryRelation}</p>
-                  </div>
-                )}
-              </div>
+              {hero.impactStory && hero.impactStory.trim() !== "" && (
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700 whitespace-pre-line leading-relaxed">{hero.impactStory}</p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
       )}
       
       {hasSecondStory && (
-        <Card className="shadow-lg rounded-2xl overflow-hidden">
-          <CardContent className="p-8">
-            <div className="space-y-6">
-              <h2 className="text-xl font-bold text-gray-800 border-b pb-2">סיפור השפעה נוסף</h2>
+        <Card className="shadow-md rounded-xl overflow-hidden border border-gray-100">
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold text-gray-800 mb-2">סיפור השפעה נוסף</h2>
               
-              {hero.additionalImpactStory && hero.additionalImpactStory.trim() !== "" && (
-                <div className="bg-gray-100 p-5 rounded-xl shadow-sm">
-                  <p className="text-gray-700 whitespace-pre-line">{hero.additionalImpactStory}</p>
+              {(hero.additionalimpactStoryTeller || hero.additionalimpactStoryRelation) && (
+                <div className="text-right mb-3">
+                  {hero.additionalimpactStoryTeller && hero.additionalimpactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.additionalimpactStoryTeller} • {hero.additionalimpactStoryRelation}</p>
+                  )}
+                  
+                  {hero.additionalimpactStoryTeller && !hero.additionalimpactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.additionalimpactStoryTeller}</p>
+                  )}
+                  
+                  {!hero.additionalimpactStoryTeller && hero.additionalimpactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.additionalimpactStoryRelation}</p>
+                  )}
                 </div>
               )}
               
-              <div className="flex flex-col md:flex-row gap-4">
-                {hero.additionalimpactStoryTeller && hero.additionalimpactStoryTeller.trim() !== "" && (
-                  <div className="bg-gray-100 p-5 rounded-xl shadow-sm flex-1">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">שם המספר</h3>
-                    <p className="text-gray-700">{hero.additionalimpactStoryTeller}</p>
-                  </div>
-                )}
-                
-                {hero.additionalimpactStoryRelation && hero.additionalimpactStoryRelation.trim() !== "" && (
-                  <div className="bg-gray-100 p-5 rounded-xl shadow-sm flex-1">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">קשר לחלל</h3>
-                    <p className="text-gray-700">{hero.additionalimpactStoryRelation}</p>
-                  </div>
-                )}
-              </div>
+              {hero.additionalImpactStory && hero.additionalImpactStory.trim() !== "" && (
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-gray-700 whitespace-pre-line leading-relaxed">{hero.additionalImpactStory}</p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

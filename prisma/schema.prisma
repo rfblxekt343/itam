@@ -80,6 +80,8 @@ model Hero {
   contactFullName       String?   @map("שם מלא ")
   contactEmail         String?   @map("אימייל ")
   contactPhone         String?   @map("טלפון ")
+
+  photosNumber           Int       @map("מספר תמונות") @default(0)
   
   version              Int       @map("__v") @default(0)
 

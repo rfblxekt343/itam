@@ -1,3 +1,4 @@
+// In the API endpoint: /app/api/search/route.ts
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
@@ -10,17 +11,13 @@ export async function GET(request: Request) {
       return NextResponse.json({ results: [] })
     }
 
+    // Search for heroes where the query is a substring of their fullName (case-insensitive)
     const heroes = await prisma.hero.findMany({
       where: {
-        OR: [
-          { fullName: { contains: query, mode: 'insensitive' } },
-          { unit: { contains: query, mode: 'insensitive' } },
-          { role: { contains: query, mode: 'insensitive' } },
-          { city: { contains: query, mode: 'insensitive' } },
-          { fallLocation: { contains: query, mode: 'insensitive' } },
-          { specialTraining: { contains: query, mode: 'insensitive' } },
-          { operations: { contains: query, mode: 'insensitive' } },
-        ],
+        fullName: {
+          contains: query, // Check if query is contained anywhere in fullName
+          mode: 'insensitive', // Case insensitive search
+        },
       },
       select: {
         id: true,
@@ -34,18 +31,11 @@ export async function GET(request: Request) {
       },
     })
 
-    // Transform the data to match the SearchResult interface
+    // Map heroes to results matching the SearchResult interface
     const results = heroes.map(hero => ({
       id: hero.id,
       name: hero.fullName,
-      // unit: hero.unit,
-      // rank: hero.role, // Mapping role to rank as per your interface
-      // city: hero.city,
-      // placeOfFalling: hero.fallLocation,
-      // specialTraining: [hero.specialTraining], // Converting to array as per interface
-      // operations: [hero.operations], // Converting to array as per interface
-      // Generate a safe URL slug for navigation
-      slug: encodeURIComponent(hero.fullName.trim())
+      slug: encodeURIComponent(hero.fullName.trim()) // Use the fullName for the slug
     }))
 
     return NextResponse.json({ results })

@@ -174,6 +174,7 @@ export async function GET(
 
       photos: hero.photos || "",
       eventMedia: hero.eventMedia || "",
+      photosNumber: hero.photosNumber || 0,
 
       // Required by interface
       version: hero.version || 1

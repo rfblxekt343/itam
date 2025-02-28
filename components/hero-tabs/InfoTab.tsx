@@ -30,6 +30,8 @@ export function InfoTab({ hero }: InfoTabProps) {
               src={`/images/heroes/${hero.fullName}/photo1.jpeg`}
               alt={`תמונה של ${hero.fullName}`}
               className="w-full h-auto object-cover"
+              width={1920}  // You can replace this with the actual width you need
+              height={1080}
             />
           </div>
 
@@ -84,7 +86,7 @@ export function InfoTab({ hero }: InfoTabProps) {
 
           {/* Biography Section */}
           <div className="md:col-span-2 space-y-2 bg-gray-50 p-6 rounded-lg">
-            <h3 className="text-lg font-bold text-gray-700 mb-2">ביוגרפיה</h3>
+            <h3 className="text-lg font-bold text-gray-700 mb-2">{hero.gender === "נקבה" ? "עליה" : "עליו"}</h3>
             <p className="text-gray-900 whitespace-pre-wrap leading-relaxed">{hero.biography}</p>
           </div>
         </div>

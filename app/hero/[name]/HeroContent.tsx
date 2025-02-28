@@ -25,7 +25,7 @@ export function HeroContent({ params }: HeroContentProps) {
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("info");
-    const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+ 
     const [scrollPosition, setScrollPosition] = useState({ left: false, right: true });
     const tabsListRef = useRef<HTMLDivElement>(null);
 
@@ -76,10 +76,7 @@ export function HeroContent({ params }: HeroContentProps) {
             }
         };
 
-        // Hide scroll indicator after a few seconds
-        const timer = setTimeout(() => {
-            setShowScrollIndicator(false);
-        }, 6000);
+     
 
         // Initial check
         checkScrollPosition();
@@ -90,13 +87,7 @@ export function HeroContent({ params }: HeroContentProps) {
             tabsListElement.addEventListener('scroll', checkScrollPosition);
         }
         
-        // Cleanup
-        return () => {
-            clearTimeout(timer);
-            if (tabsListElement) {
-                tabsListElement.removeEventListener('scroll', checkScrollPosition);
-            }
-        };
+    
     }, [isLoading]);
 
     // Animation variants for tab content
@@ -178,7 +169,7 @@ export function HeroContent({ params }: HeroContentProps) {
                         <motion.button 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full p-1 shadow-md text-lime-600 hover:bg-white md:hidden"
+                            className="absolute left-0 top-1/3 -translate-y-1/2 z-10 bg-white/80 rounded-full p-1 shadow-md text-lime-600 hover:bg-white md:hidden"
                             onClick={() => scrollTabs('left')}
                             aria-label="Scroll tabs left"
                         >
@@ -191,7 +182,7 @@ export function HeroContent({ params }: HeroContentProps) {
                         <motion.button 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full p-1 shadow-md text-lime-600 hover:bg-white md:hidden"
+                            className="absolute right-0 top-1/3 -translate-y-1/2 z-10 bg-white/80 rounded-full p-1 shadow-md text-lime-600 hover:bg-white md:hidden"
                             onClick={() => scrollTabs('right')}
                             aria-label="Scroll tabs right"
                         >
@@ -199,20 +190,7 @@ export function HeroContent({ params }: HeroContentProps) {
                         </motion.button>
                     )}
                     
-                    {/* Scroll indicator tooltip */}
-                    {showScrollIndicator && scrollPosition.right && (
-                        <motion.div 
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute right-12 top-1/2 -translate-y-1/2 z-10 bg-lime-100 text-lime-800 text-sm px-3 py-1 rounded-lg shadow-md md:hidden"
-                        >
-                            <div className="flex items-center gap-1">
-                                <span>החלק לצפייה בעוד לשוניות</span>
-                                <ChevronLeft size={16} />
-                            </div>
-                        </motion.div>
-                    )}
+                  
 
                     <div 
                         ref={tabsListRef}
