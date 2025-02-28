@@ -1,8 +1,20 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { FallenHero } from "@/types/fallen-hero";
 
+// Define interface for impact story structure
+interface ImpactStory {
+  content?: string;
+  tellerName?: string;
+  relation?: string;
+}
+
 interface ImpactTabProps {
   hero: FallenHero;
+}
+
+// Extended hero type that might include impactStories array
+interface ExtendedFallenHero extends FallenHero {
+  impactStories?: ImpactStory[];
 }
 
 export function ImpactTab({ hero }: ImpactTabProps) {
@@ -25,8 +37,8 @@ export function ImpactTab({ hero }: ImpactTabProps) {
 
   // Check if the API transformation created impactStories array instead of individual fields
   // This matches how the API is transforming impact stories in the code you provided
-  if (hero.hasOwnProperty('impactStories') && Array.isArray((hero as any).impactStories)) {
-    const impactStories = (hero as any).impactStories;
+  if (hero.hasOwnProperty('impactStories') && Array.isArray((hero as ExtendedFallenHero).impactStories)) {
+    const impactStories = (hero as ExtendedFallenHero).impactStories;
     
     if (!impactStories || impactStories.length === 0) {
       return <div className="text-center py-8 text-gray-500">אין סיפורי השפעה</div>;
@@ -34,7 +46,7 @@ export function ImpactTab({ hero }: ImpactTabProps) {
 
     return (
       <div className="space-y-8">
-        {impactStories.map((story: any, index: number) => (
+        {impactStories.map((story: ImpactStory, index: number) => (
           <Card key={index} className="shadow-lg rounded-2xl overflow-hidden">
             <CardContent className="p-8">
               <div className="space-y-6">
