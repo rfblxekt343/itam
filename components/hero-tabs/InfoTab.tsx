@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { FallenHero } from "@/types/fallen-hero";
 import { Instagram } from "lucide-react";
+import Image from "next/image";
 
 interface InfoTabProps {
   hero: FallenHero;
@@ -25,7 +26,7 @@ export function InfoTab({ hero }: InfoTabProps) {
         <div className="mb-6 flex justify-center">
 
           <div className="relative w-40 h-40 md:w-48 md:h-48 overflow-hidden rounded-lg shadow-md">
-            <img
+            <Image
               src={`/images/heroes/${hero.fullName}/photo1.jpeg`}
               alt={`תמונה של ${hero.fullName}`}
               className="w-full h-auto object-cover"

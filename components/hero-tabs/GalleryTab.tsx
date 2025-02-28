@@ -105,6 +105,7 @@ export function GalleryTab({ hero }: GalleryTabProps) {
                 >
                   <Image
                     src={url}
+                    alt={hero.fullName}
                     className="w-full h-full object-contain bg-black/5"
                     width={800}  // Adjust to fit your design
                     height={600} // Adjust to fit your design
