@@ -31,7 +31,7 @@ export default function Home() {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           <h1
-            className="text-5xl sm:text-7xl md:text-9xl font-bold text-lime-600 mb-4 sm:mb-6 mt-0 sm:-mt-20"
+            className="text-5xl sm:text-7xl md:text-9xl font-bold text-lime-600 mb-4 sm:mb-6 mt-4 sm:-mt-20"
             style={{
               textShadow: '0 4px 8px rgba(59, 130, 246, 0.2)',
               background: 'linear-gradient(to right, #4d7c0f,#365314)',
@@ -41,6 +41,7 @@ export default function Home() {
           >
             אִתָּם
           </h1>
+
         </motion.div>
 
         <motion.p

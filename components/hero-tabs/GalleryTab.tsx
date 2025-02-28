@@ -16,24 +16,26 @@ export function GalleryTab({ hero }: GalleryTabProps) {
 
   useEffect(() => {
     if (hero.fullName) {
-      const folderPath = `/Images/heroes/${hero.fullName}`;
+      const folderPath = `/images/heroes/${hero.fullName}`;
       const images = [
-        `${folderPath}/photo1.jpg`,
-        `${folderPath}/photo2.jpg`,
-        `${folderPath}/photo3.jpg`,
-        `${folderPath}/photo4.jpg`,
-        `${folderPath}/photo5.jpg`,
-        `${folderPath}/photo6.jpg`,
-        `${folderPath}/photo7.jpg`,
-        `${folderPath}/photo8.jpg`,
-        `${folderPath}/photo9.jpg`,
-        `${folderPath}/photo10.jpg`,
-        `${folderPath}/photo11.jpg`,
-        `${folderPath}/photo12.jpg`,
-        `${folderPath}/photo13.jpg`,
-        `${folderPath}/photo14.jpg`,
-        `${folderPath}/photo15.jpg`,
-        `${folderPath}/photo16.jpg`,
+        `${folderPath}/photo1.jpeg`,
+        `${folderPath}/photo2.jpeg`,
+        `${folderPath}/photo3.jpeg`,
+        `${folderPath}/photo4.jpeg`,
+        `${folderPath}/photo5.jpeg`,
+        `${folderPath}/photo6.jpeg`,
+        `${folderPath}/photo7.jpeg`,
+        `${folderPath}/photo8.jpeg`,
+        `${folderPath}/photo9.jpeg`,
+        `${folderPath}/photo10.jpeg`,
+        `${folderPath}/photo11.jpeg`,
+        `${folderPath}/photo12.jpeg`,
+        `${folderPath}/photo13.jpeg`,
+        `${folderPath}/photo14.jpeg`,
+        `${folderPath}/photo15.jpeg`,
+        `${folderPath}/photo16.jpeg`,
+        `${folderPath}/photo17.jpeg`,
+        `${folderPath}/photo1.jpeg`,
       ];
       setPhotoUrls(images);
     }
@@ -103,7 +105,6 @@ export function GalleryTab({ hero }: GalleryTabProps) {
                 >
                   <Image
                     src={url}
-                    alt={`תמונה של הגיבור - ${hero.name}`}
                     className="w-full h-full object-contain bg-black/5"
                     width={800}  // Adjust to fit your design
                     height={600} // Adjust to fit your design

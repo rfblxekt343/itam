@@ -13,11 +13,11 @@ export function StoriesTab({ hero }: StoriesTabProps) {
   console.log("Filtered stories array:", stories); // Debug: Log stories after filtering
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" >
       {stories.length > 0 ? (
         stories.map((story, index) => {
           return (
-            <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-200">
+            <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-200" >
               <CardContent className="p-8">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-gray-600 pt-4 border-t border-gray-100"  dir="rtl">
                   {story.tellerName && (

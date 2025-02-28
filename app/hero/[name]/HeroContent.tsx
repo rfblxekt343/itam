@@ -224,9 +224,11 @@ export function HeroContent({ params }: HeroContentProps) {
                                 { value: "milestones", icon: <Milestone className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "אבני דרך" },
                                 { value: "world", icon: <Star className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "העולם שלו/ה" },
                                 { value: "impact", icon: <Users className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "השפעה על אחרים" },
-                                { value: "service", icon: <Medal className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "שירות צבאי" },
+                                { value: "gallery", icon: <Camera className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "גלריה" },
                                 { value: "stories", icon: <BookOpen className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "סיפורים וזכרונות" },
-                                { value: "gallery", icon: <Camera className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "גלריה" }
+                                { value: "service", icon: <Medal className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "שירות צבאי" },
+                               
+                                
                             ].map(tab => (
                                 <TabsTrigger
                                     key={tab.value}
