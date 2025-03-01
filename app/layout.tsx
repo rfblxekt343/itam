@@ -16,7 +16,7 @@ const fredoka = FontFredoka({
 
 export const metadata: Metadata = {
   title: "אִתָּם",
-  description: "אתר הנצחה חללי מלחמת חרבות ברזל",
+  description: "אתר הנצחה לגיבורי מלחמת חרבות ברזל",
 };
 
 export default function RootLayout({

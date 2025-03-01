@@ -25,7 +25,7 @@ export function HeroContent({ params }: HeroContentProps) {
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("info");
- 
+
     const [scrollPosition, setScrollPosition] = useState({ left: false, right: true });
     const tabsListRef = useRef<HTMLDivElement>(null);
 
@@ -68,26 +68,26 @@ export function HeroContent({ params }: HeroContentProps) {
                 const { scrollLeft, scrollWidth, clientWidth } = tabsListRef.current;
                 const isScrollLeft = scrollLeft > 5;
                 const isScrollRight = scrollLeft < scrollWidth - clientWidth - 5;
-                
-                setScrollPosition({ 
-                    left: isScrollLeft, 
-                    right: isScrollRight 
+
+                setScrollPosition({
+                    left: isScrollLeft,
+                    right: isScrollRight
                 });
             }
         };
 
-     
+
 
         // Initial check
         checkScrollPosition();
-        
+
         // Add scroll event listener
         const tabsListElement = tabsListRef.current;
         if (tabsListElement) {
             tabsListElement.addEventListener('scroll', checkScrollPosition);
         }
-        
-    
+
+
     }, [isLoading]);
 
     // Animation variants for tab content
@@ -101,10 +101,10 @@ export function HeroContent({ params }: HeroContentProps) {
     const scrollTabs = (direction: 'left' | 'right') => {
         if (tabsListRef.current) {
             const scrollAmount = 200; // Pixels to scroll
-            const newPosition = direction === 'left' 
+            const newPosition = direction === 'left'
                 ? tabsListRef.current.scrollLeft - scrollAmount
                 : tabsListRef.current.scrollLeft + scrollAmount;
-            
+
             tabsListRef.current.scrollTo({
                 left: newPosition,
                 behavior: 'smooth'
@@ -166,7 +166,7 @@ export function HeroContent({ params }: HeroContentProps) {
                 <div className="relative mb-6 md:mb-8">
                     {/* Left scroll button */}
                     {scrollPosition.left && (
-                        <motion.button 
+                        <motion.button
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             className="absolute left-0 top-1/3 -translate-y-1/2 z-10 bg-white/80 rounded-full p-1 shadow-md text-lime-600 hover:bg-white md:hidden"
@@ -176,10 +176,10 @@ export function HeroContent({ params }: HeroContentProps) {
                             <ChevronLeft size={24} />
                         </motion.button>
                     )}
-                    
+
                     {/* Right scroll button */}
                     {scrollPosition.right && (
-                        <motion.button 
+                        <motion.button
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             className="absolute right-0 top-1/3 -translate-y-1/2 z-10 bg-white/80 rounded-full p-1 shadow-md text-lime-600 hover:bg-white md:hidden"
@@ -189,14 +189,15 @@ export function HeroContent({ params }: HeroContentProps) {
                             <ChevronRight size={24} />
                         </motion.button>
                     )}
-                    
-                  
 
-                    <div 
+
+
+                    <div
                         ref={tabsListRef}
                         className="overflow-x-auto pb-2 scrollbar-hide"
                     >
-                        <TabsList className="flex md:grid w-full md:grid-cols-3 lg:grid-cols-7 gap-2 min-w-max">
+                        <TabsList className="flex md:grid w-full md:grid-cols-3 lg:grid-cols-7 gap-2 min-w-max rounded-[20px]">
+
                             {[
                                 { value: "info", icon: <Heart className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "מידע אישי" },
                                 { value: "milestones", icon: <Milestone className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "אבני דרך" },
@@ -205,17 +206,16 @@ export function HeroContent({ params }: HeroContentProps) {
                                 { value: "gallery", icon: <Camera className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "גלריה" },
                                 { value: "stories", icon: <BookOpen className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "סיפורים וזכרונות" },
                                 { value: "service", icon: <Medal className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "שירות צבאי" },
-                               
-                                
+
+
                             ].map(tab => (
                                 <TabsTrigger
                                     key={tab.value}
                                     value={tab.value}
-                                    className={`whitespace-nowrap transition-all duration-300 ease-in-out text-sm md:text-base px-3 py-2 md:px-4 md:py-2 ${
-                                        activeTab === tab.value 
-                                            ? "bg-lime-500 text-white shadow-md transform scale-105" 
+                                    className={`whitespace-nowrap transition-all duration-300 ease-in-out text-sm md:text-base px-3 py-2 md:px-4 md:py-2 ${activeTab === tab.value
+                                            ? "bg-lime-500 text-white shadow-md transform scale-105"
                                             : "text-lime-600 hover:bg-lime-100"
-                                    }`}
+                                        }`}
                                 >
                                     <span className="flex items-center">
                                         {tab.icon} {tab.label}
@@ -224,7 +224,7 @@ export function HeroContent({ params }: HeroContentProps) {
                             ))}
                         </TabsList>
                     </div>
-                    
+
                     {/* Gradient overlay to indicate more content */}
                     {scrollPosition.right && (
                         <div className="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden"></div>

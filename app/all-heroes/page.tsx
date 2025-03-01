@@ -38,18 +38,26 @@ export default async function AllHeroesPage() {
             key={hero.id}
             className="block transform transition-transform duration-300 hover:scale-105"
           >
-            <div className="bg-lime-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden p-4 text-center">
-              <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
+            <div className="bg-lime-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden p-4 text-center relative">
+              {/* Simpler, more elegant badge */}
+              <div className="absolute top-0 right-0 bg-lime-500 text-white px-3 py-1 text-xs font-medium rounded-bl-lg">
+                לחץ לעמוד הגיבור
+              </div>
+              
+              <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 mt-6">
                 {hero.fullName}
               </h2>
+              
               <div className="flex justify-center">
-                <Image
-                  src={`/images/heroes/${hero.fullName}/photo1.jpeg`}
-                  alt={hero.fullName}
-                  width={200}
-                  height={200}
-                  className="rounded-lg object-cover w-full max-w-[200px] h-auto"
-                />
+                <div className="relative">
+                  <Image
+                    src={`/images/heroes/${hero.fullName}/photo1.jpeg`}
+                    alt={hero.fullName}
+                    width={200}
+                    height={200}
+                    className="rounded-lg object-cover w-full max-w-[200px] h-auto shadow-sm"
+                  />
+                </div>
               </div>
             </div>
           </Link>

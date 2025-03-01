@@ -6,10 +6,8 @@ import { ArrowLeft, Mail, Shield, CheckCircle } from 'lucide-react';
 const ContactUs = () => {
   return (
     <div className="max-w-4xl mx-auto p-8" dir="rtl">
-      <h1 className="text-3xl font-bold text-center mb-6 text-black">הנצחת הגיבור שלי</h1>
-      <p className="text-lg text-center mb-8 text-black">
-        אני מתחייבת להנציח את זכרם של הנופלים בכבוד, באופן מדויק ומכובד
-      </p>
+      <h1 className="text-3xl font-bold text-center mb-6 text-black">הנצחת הגיבור שלך</h1>
+     
 
       {/* תהליך ההנצחה */}
       <div className="bg-gray-100 p-6 rounded-lg shadow-md mb-8">
@@ -58,7 +56,7 @@ const ContactUs = () => {
       <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-gray-200">
         <h2 className="text-2xl font-semibold mb-4 text-black">המידע הנדרש להנצחה</h2>
         <p className="text-lg mb-4 text-black">
-          כדי להנציח את יקירכם בצורה המכבדת ביותר, נשמח לקבל את הפרטים הבאים:
+          כדי להנציח את יקירכם בצורה המכבדת ביותר, אשמח לקבל את הפרטים הבאים:
         </p>
 
         <ul className="list-disc mr-6 mb-6 text-lg space-y-2 text-black">
@@ -72,7 +70,7 @@ const ContactUs = () => {
           <li>&#x5E6;&#x5D0;&#x5E9;&#x5D9;&#x5DD; &#x5D4;&#x5D5;&#x5D7;&#x5D9;&#x5D8;</li>
 
           <li>סיפורי חיים אישיים (כולל שם המספר והקשר לחלל)</li>
-          <li>תמונות (פורמטים: JPG, PNG, GIF)</li>
+          <li>תמונות (פורמטים: JPG, PNG)</li>
           <li>שירים, ספרים, סרטים ומקומות משמעותיים</li>
           <li>ציטוטים וערכים מובילים</li>
           <li>תחביבים וכישרונות</li>
@@ -92,11 +90,13 @@ const ContactUs = () => {
           מלא/י טופס להנצחת יקירך
         </a>
       </div>
-
+      <p className="text-lg text-center mt-4 text-black">
+        אני מתחייבת להנציח את זכרם של הנופלים בכבוד, באופן מדויק וראוי
+      </p>
       {/* מידע נוסף */}
       <div className="mt-8 text-center">
         <p className="mb-4 text-black">
-          לשאלות נוספות או תמיכה, ניתן ליצור איתי קשר במייל:
+          לשאלות נוספות, ניתן ליצור איתי קשר במייל:
         </p>
         <a
           href="https://mail.google.com/mail/?view=cm&fs=1&to=itamforever@gmail.com"
