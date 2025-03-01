@@ -70,7 +70,7 @@ export function WorldTab({ hero }: WorldTabProps) {
               className={`bg-gray-100 p-5 rounded-xl shadow-sm ${section.colSpan}`}
             >
               <h3 className="text-lg font-semibold text-gray-800">{section.title}</h3>
-              <p className="text-gray-700">{section.key === "quotes" ? <span className="italic">{section.content}</span> : section.content}</p>
+              <p className="text-gray-700" dir="rtl">{section.key === "quotes" ? <span className="italic">{section.content}</span> : section.content}</p>
             </div>
           ))}
         </div>

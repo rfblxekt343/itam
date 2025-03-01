@@ -18,6 +18,7 @@ interface ExtendedFallenHero extends FallenHero {
 }
 
 export function ImpactTab({ hero }: ImpactTabProps) {
+  console.log()
   // Helper function to check if a story section has content
   const hasStoryContent = (story: string | undefined, teller: string | undefined, relation: string | undefined): boolean => {
     return (!!story && story.trim() !== "") || 
@@ -107,7 +108,7 @@ export function ImpactTab({ hero }: ImpactTabProps) {
               
               {hero.impactStory && hero.impactStory.trim() !== "" && (
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-700 whitespace-pre-line leading-relaxed">{hero.impactStory}</p>
+                  <p className="text-gray-700 whitespace-pre-line leading-relaxed" dir="rtl">{hero.impactStory}</p>
                 </div>
               )}
             </div>

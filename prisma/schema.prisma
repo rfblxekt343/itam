@@ -36,7 +36,7 @@ model Hero {
   story1Relation         String?   @map("סיפור 1  - הקשר לחלל")
   
   story2Title            String?   @map("סיפור 2  -  כותרת")
-  story2Content          String?   @map("סיפור 2 - תוכן ")
+  story2Content          String?   @map("סיפור 2 - תוכן")
   story2TellerName       String?   @map("סיפור 2 - שם המספר")
   story2Relation         String?   @map("סיפור 2 - הקשר לחלל")
   
@@ -73,12 +73,12 @@ model Hero {
   impactStoryTeller     String?   @map("שם המספר")
   impactStoryRelation   String?   @map("קשר לחלל")
   
-  additionalImpactStory String?   @map("סיפור השפעה - 2 ")
+  additionalImpactStory String?   @map("סיפור השפעה - 2")
   additionalImpactStoryTeller String?   @map("שם המספר - 2")
   additionalImpactStoryRelation String?   @map("קשר לחלל - 2")
   
-  contactFullName       String?   @map("שם מלא ")
-  contactEmail         String?   @map("אימייל ")
+  contactFullName       String?   @map("שם איש קשר ")
+  contactEmail         String?   @map("אימייל")
   contactPhone         String?   @map("טלפון ")
 
   photosNumber           Int       @map("מספר תמונות") @default(0)

@@ -18,6 +18,9 @@ export function formatDate(isoString: string): string {
 }
 
 export function MilestonesTab({ hero }: MilestonesTabProps) {
+  if (!hero.eventTitle && !hero.eventDate && !hero.eventDescription) {
+    return <p className="text-gray-700 text-center py-4">טרם הוזן מידע לעמוד זה</p>;
+  }
   return (
     <>
       <Card className="shadow-lg rounded-2xl overflow-hidden">

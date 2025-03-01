@@ -25,6 +25,7 @@ async function getHeroes() {
 export default async function AllHeroesPage() {
   const heroes = await getHeroes();
 
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-lime-600 text-3xl md:text-4xl font-extrabold text-center mb-6 text-gray-800">
@@ -43,11 +44,11 @@ export default async function AllHeroesPage() {
               <div className="absolute top-0 right-0 bg-lime-500 text-white px-3 py-1 text-xs font-medium rounded-bl-lg">
                 לחץ לעמוד הגיבור
               </div>
-              
+
               <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 mt-6">
                 {hero.fullName}
               </h2>
-              
+
               <div className="flex justify-center">
                 <div className="relative">
                   <Image
@@ -55,7 +56,7 @@ export default async function AllHeroesPage() {
                     alt={hero.fullName}
                     width={200}
                     height={200}
-                    className="rounded-lg object-cover w-full max-w-[200px] h-auto shadow-sm"
+                    className="rounded-lg object-cover w-[200px] h-[200px] shadow-sm"
                   />
                 </div>
               </div>
