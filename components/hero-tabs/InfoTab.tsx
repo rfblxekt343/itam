@@ -28,7 +28,7 @@ export function InfoTab({ hero }: InfoTabProps) {
 
           <div className="relative w-40 h-40 md:w-48 md:h-48 overflow-hidden rounded-lg shadow-md">
             <Image
-              src={`/images/heroes/${hero.fullName}/photo1.jpeg`}
+              src={hero.fullName === "תומר קרן" ?  `/images/heroes/${hero.fullName}/photo5.jpeg` :`/images/heroes/${hero.fullName}/photo1.jpeg`}
               alt={`תמונה של ${hero.fullName}`}
               className="w-full h-auto object-cover"
               width={1920}  // You can replace this with the actual width you need
