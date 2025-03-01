@@ -19,7 +19,7 @@ export function StoriesTab({ hero }: StoriesTabProps) {
                 {hero.fullName === "אושר (שמחה) ברזילי" && index === 0 && (
                   <div className="w-full flex justify-center mb-4">
                     <Image
-                      src={`/images/heroes/${encodeURIComponent(hero.fullName)}/photo4.jpeg`}
+                      src={`/images/heroes/${encodeURIComponent(hero.fullName)}/photo18.jpeg`}
                       alt={`תמונה של ${hero.fullName}`}
                       width={200}
                       height={200}
