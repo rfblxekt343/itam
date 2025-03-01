@@ -14,6 +14,7 @@ export function InfoTab({ hero }: InfoTabProps) {
       year: 'numeric',
       month: 'numeric',
       day: 'numeric',
+      timeZone: 'UTC',
     });
   };
 
