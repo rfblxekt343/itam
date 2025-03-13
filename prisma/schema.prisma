@@ -56,10 +56,21 @@ model Hero {
   story5Relation         String?   @map("סיפור 5 - הקשר לחלל")
   
   photos                 String    @map("העלאת תמונות ( GIF, PNG ,JPG)")
+  
   eventDate              String    @map("תאריך האירוע")
   eventTitle             String    @map("כותרת האירוע")
   eventDescription       String    @map("תיאור")
   eventMedia             String    @map("תמונה או סרטון")
+  
+  eventDate2             String?   @map("תאריך אירוע - 2")
+  eventTitle2            String?   @map("כותרת אירוע - 2")
+  eventDescription2      String?   @map("תיאור אירוע - 2")
+  eventMedia2            String?   @map("תמונה או סרטון של אירוע 2")
+  
+  eventDate3             String?   @map("תאריך אירוע - 3")
+  eventTitle3            String?   @map("כותרת אירוע - 3")
+  eventDescription3      String?   @map("תיאור אירוע - 3")
+  eventMedia3            String?   @map("תמונה או סרטון של אירוע 3")
   
   favoriteSongs          String    @map("שירים שאהב/ה במיוחד ( יש לציין אם שם הזמר או המלחין)")
   favoriteBooks          String    @map("ספרים משמעותיים עבורה")
@@ -69,21 +80,21 @@ model Hero {
   leadingValues          String    @map("ערכים מובילים")
   hobbies                String    @map("תחביבים וכישרונות")
   
-  impactStory           String?   @map("סיפור השפעה")
-  impactStoryTeller     String?   @map("שם המספר")
-  impactStoryRelation   String?   @map("קשר לחלל")
+  impactStory            String?   @map("סיפור השפעה - 1")
+  impactStoryTeller      String?   @map("שם המספר - 1")
+  impactStoryRelation    String?   @map("קשר לחלל - 1")
   
-  additionalImpactStory String?   @map("סיפור השפעה - 2")
-  additionalImpactStoryTeller String?   @map("שם המספר - 2")
-  additionalImpactStoryRelation String?   @map("קשר לחלל - 2")
+  additionalImpactStory  String?   @map("סיפור השפעה - 2")
+  additionalImpactStoryTeller String? @map("שם המספר - 2")
+  additionalImpactStoryRelation String? @map("קשר לחלל - 2")
   
-  contactFullName       String?   @map("שם איש קשר ")
-  contactEmail         String?   @map("אימייל")
-  contactPhone         String?   @map("טלפון ")
+  contactFullName        String?   @map("שם איש קשר ")
+  contactEmail           String?   @map("אימייל")
+  contactPhone           String?   @map("טלפון ")
 
   photosNumber           Int       @map("מספר תמונות") @default(0)
   
-  version              Int       @map("__v") @default(0)
+  version                Int       @map("__v") @default(0)
 
   @@map("heroes")
 }

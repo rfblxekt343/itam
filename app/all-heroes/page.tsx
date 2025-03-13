@@ -56,8 +56,9 @@ export default async function AllHeroesPage() {
                     alt={hero.fullName}
                     width={200}
                     height={200}
-                    className="rounded-lg object-cover w-[200px] h-[200px] shadow-sm"
+                    className="rounded-lg object-contain w-[200px] h-[200px] shadow-sm"
                   />
+
                 </div>
               </div>
             </div>

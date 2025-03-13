@@ -55,7 +55,7 @@ export function ServiceTab({ hero }: ServiceTabProps) {
     },
     {
       key: "commendations",
-      title: "צל&quot;שים והוכרות",
+      title: 'צלש"ים והוכרות',
       content: hero.commendations,
       colSpan: "col-span-1"
     }

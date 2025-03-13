@@ -31,7 +31,7 @@ export function ImpactTab({ hero }: ImpactTabProps) {
     const impactStories = (hero as ExtendedFallenHero).impactStories;
     
     if (!impactStories || impactStories.length === 0) {
-      return <div className="text-center py-8 text-gray-500">אין סיפורי השפעה</div>;
+      return <div className="text-center py-8 text-gray-500">טרם הוזנו סיפורי השפעה</div>;
     }
 
     return (
@@ -79,7 +79,7 @@ export function ImpactTab({ hero }: ImpactTabProps) {
   const hasSecondStory = hasStoryContent(hero.additionalImpactStory, hero.additionalimpactStoryTeller, hero.additionalimpactStoryRelation);
 
   if (!hasFirstStory && !hasSecondStory) {
-    return <div className="text-center py-8 text-gray-500">אין סיפורי השפעה</div>;
+    return <div className="text-center py-8 text-gray-500">טרם הוזנו סיפורי השפעה</div>;
   }
 
   return (
