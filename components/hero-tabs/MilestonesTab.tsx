@@ -31,10 +31,10 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
               <div className="text-2xl font-bold text-gray-800">{hero.eventTitle}</div>
               
               {/* Date section with calendar icon */}
-              <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full text-gray-700 font-medium">
+            {hero.eventDate &&  <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full text-gray-700 font-medium">
                 <MdCalendarToday size={20} /> {/* Calendar icon */}
                 <span>{formatDate(hero.eventDate)}</span>
-              </div>
+              </div>}
             </div>
             
             {/* Event Description - Centered with multiple approaches */}
@@ -59,13 +59,14 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   </div>
                 ) : hero.eventMedia.includes("youtube") || hero.eventMedia.includes("mp4") ? (
                   <div className="rounded-lg overflow-hidden shadow-md">
-                    <video controls className="w-full">
-                      <source src={hero.eventMedia} type="video/mp4" />
-                      הדפדפן שלך אינו תומך בניגון וידאו.
-                    </video>
+
                   </div>
                 ) : (
-                  <p className="text-gray-700">{hero.eventMedia}</p>
+                  <video
+                      src={`/videos/heroes/${hero.fullName}/video.mp4`}
+                      controls
+                      className="w-full h-auto"
+                    />
                 )}
               </div>
             )}

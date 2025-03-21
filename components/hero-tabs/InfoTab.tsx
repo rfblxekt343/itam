@@ -8,15 +8,22 @@ interface InfoTabProps {
 }
 
 export function InfoTab({ hero }: InfoTabProps) {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('he-IL', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
+  
+   function formatDate(isoString: string): string {
+    // Create a date object from the ISO string
+    const date = new Date(isoString);
+    
+    // Add one day to the date
+    date.setUTCDate(date.getUTCDate() + 1);
+    
+    // Format the date using the Israeli locale
+    return date.toLocaleDateString("he-IL", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
       timeZone: 'UTC',
     });
-  };
+  }
 
 
 
