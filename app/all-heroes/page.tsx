@@ -1,7 +1,8 @@
+// app/heroes/page.js
 import { prisma } from '@/lib/prisma';
-import Link from 'next/link';
-import Image from 'next/image';
+import ClientHeroesPage from '../../components/HeroesDisplay';
 
+// Server component to fetch heroes data
 async function getHeroes() {
   try {
     const heroes = await prisma.hero.findMany({
@@ -22,55 +23,8 @@ async function getHeroes() {
   }
 }
 
+// Main page component (server component)
 export default async function AllHeroesPage() {
   const heroes = await getHeroes();
-
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-lime-600 text-3xl md:text-4xl font-extrabold text-center mb-6 text-gray-800">
-        הגיבורים
-      </h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        {heroes.map((hero) => (
-          <Link
-            href={`/hero/${encodeURIComponent(hero.fullName)}`}
-            key={hero.id}
-            className="block transform transition-transform duration-300 hover:scale-105"
-          >
-            <div className="bg-lime-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden p-4 text-center relative">
-              {/* Simpler, more elegant badge */}
-              <div className="absolute top-0 right-0 bg-lime-500 text-white px-3 py-1 text-xs font-medium rounded-bl-lg">
-                לחץ לעמוד הגיבור
-              </div>
-
-              <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 mt-6">
-                {hero.fullName}
-              </h2>
-
-              <div className="flex justify-center">
-                <div className="relative">
-                  <Image
-                    src={`/images/heroes/${hero.fullName}/photo1.jpeg`}
-                    alt={hero.fullName}
-                    width={200}
-                    height={200}
-                    className="rounded-lg object-contain w-[200px] h-[200px] shadow-sm"
-                  />
-
-                </div>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      {heroes.length === 0 && (
-        <div className="text-center text-gray-600 mt-12 text-lg">
-          לא נמצאו גיבורים במערכת
-        </div>
-      )}
-    </div>
-  );
+  return <ClientHeroesPage heroes={heroes} />;
 }
