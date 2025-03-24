@@ -1,9 +1,11 @@
-// components/Searchbar.tsx
-
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Search, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { SearchResult, formatSearchResult } from '@/lib/search-utils'
+
+// Simple client-side cache
+const searchCache = new Map<string, { timestamp: number, results: SearchResult[] }>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 const Searchbar = () => {
   const router = useRouter()
@@ -13,35 +15,50 @@ const Searchbar = () => {
   const [isSearching, setIsSearching] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    const searchHeroes = async () => {
-      if (!searchValue.trim()) {
-        setResults([])
-        setError(null)
-        return
-      }
-
-      setIsSearching(true)
+  // Use useCallback to prevent recreating the search function on each render
+  const searchHeroes = useCallback(async (query: string) => {
+    if (!query.trim()) {
+      setResults([])
       setError(null)
-
-      try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(searchValue)}`)
-        if (!response.ok) throw new Error('Search failed')
-
-        const data = await response.json()
-        setResults(data.results)
-      } catch (error) {
-        console.error('Search error:', error)
-        setError('חיפוש נכשל. אנא נסה שוב.')
-        setResults([])
-      } finally {
-        setIsSearching(false)
-      }
+      return
     }
 
-    const debounce = setTimeout(searchHeroes, 300)
+    // Check cache first
+    const cacheKey = query.toLowerCase();
+    const cachedData = searchCache.get(cacheKey);
+    if (cachedData && (Date.now() - cachedData.timestamp) < CACHE_TTL) {
+      setResults(cachedData.results);
+      return;
+    }
+
+    setIsSearching(true)
+    setError(null)
+
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+      if (!response.ok) throw new Error('Search failed')
+
+      const data = await response.json()
+      setResults(data.results)
+      
+      // Update cache
+      searchCache.set(cacheKey, {
+        timestamp: Date.now(),
+        results: data.results
+      });
+    } catch (error) {
+      console.error('Search error:', error)
+      setError('חיפוש נכשל. אנא נסה שוב.')
+      setResults([])
+    } finally {
+      setIsSearching(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    const debounce = setTimeout(() => searchHeroes(searchValue), 500) // Increased to 500ms
     return () => clearTimeout(debounce)
-  }, [searchValue])
+  }, [searchValue, searchHeroes])
 
   const handleClear = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -51,14 +68,12 @@ const Searchbar = () => {
     setIsExpanded(false)
   }
 
-  // In your Searchbar.tsx when handling result click
-  const handleResultClick = (result: SearchResult) => {
-    // Route to the hero page
+  const handleResultClick = useCallback((result: SearchResult) => {
     router.push(`/hero/${result.slug}`)
     setSearchValue('')
     setResults([])
     setIsExpanded(false)
-  }
+  }, [router])
   
   return (
     <div className="flex justify-center items-center p-4">
