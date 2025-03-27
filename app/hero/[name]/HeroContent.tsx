@@ -21,9 +21,6 @@ interface HeroContentProps {
     };
 }
 
-
-
-
 export function HeroContent({ params }: HeroContentProps) {
     const [hero, setHero] = useState<FallenHero | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -99,7 +96,7 @@ export function HeroContent({ params }: HeroContentProps) {
         const tabsListElement = tabsListRef.current;
         if (tabsListElement) {
             tabsListElement.addEventListener('scroll', checkScrollPosition);
-            
+
             // Cleanup on unmount
             return () => {
                 tabsListElement.removeEventListener('scroll', checkScrollPosition);
@@ -126,7 +123,7 @@ export function HeroContent({ params }: HeroContentProps) {
     const swipeHandlers = useSwipeable({
         onSwipedLeft: () => navigateTab('next'),
         onSwipedRight: () => navigateTab('prev'),
-        preventDefaultTouchmoveEvent: true,
+        touchEventOptions: { passive: false },
         trackMouse: false
     });
 
@@ -134,15 +131,15 @@ export function HeroContent({ params }: HeroContentProps) {
     const navigateTab = (direction: 'prev' | 'next') => {
         const currentIndex = tabConfig.findIndex(tab => tab.value === activeTab);
         let newIndex;
-        
+
         if (direction === 'prev') {
             newIndex = currentIndex > 0 ? currentIndex - 1 : tabConfig.length - 1;
         } else {
             newIndex = currentIndex < tabConfig.length - 1 ? currentIndex + 1 : 0;
         }
-        
+
         setActiveTab(tabConfig[newIndex].value);
-        
+
         // Scroll the tab into view
         if (tabsListRef.current) {
             const tabElements = tabsListRef.current.querySelectorAll('[role="tab"]');
@@ -181,10 +178,10 @@ export function HeroContent({ params }: HeroContentProps) {
     };
 
     // Handle keyboard navigation
-    const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    const handleKeyDown = (e: React.KeyboardEvent, tabIndex: number) => {
         if (e.key === 'ArrowLeft') {
             e.preventDefault();
-            const prevIndex = index > 0 ? index - 1 : tabConfig.length - 1;
+            const prevIndex = tabIndex > 0 ? tabIndex - 1 : tabConfig.length - 1;
             setActiveTab(tabConfig[prevIndex].value);
             const tabElements = tabsListRef.current?.querySelectorAll('[role="tab"]');
             if (tabElements && tabElements[prevIndex]) {
@@ -192,7 +189,7 @@ export function HeroContent({ params }: HeroContentProps) {
             }
         } else if (e.key === 'ArrowRight') {
             e.preventDefault();
-            const nextIndex = index < tabConfig.length - 1 ? index + 1 : 0;
+            const nextIndex = tabIndex < tabConfig.length - 1 ? tabIndex + 1 : 0;
             setActiveTab(tabConfig[nextIndex].value);
             const tabElements = tabsListRef.current?.querySelectorAll('[role="tab"]');
             if (tabElements && tabElements[nextIndex]) {
@@ -226,8 +223,8 @@ export function HeroContent({ params }: HeroContentProps) {
     }
 
     // Function to render tab content with animation
-    const renderTabContent = (tabValue: string, Component: React.ComponentType<{hero: FallenHero}>) => (
-        <TabsContent value={tabValue} className="outline-none text-center" role="tabpanel" aria-labelledby={`tab-${tabValue}`}>
+    const renderTabContent = (tabValue: string, Component: React.ComponentType<{ hero: FallenHero }>) => (
+        <TabsContent value={tabValue} className="outline-none text-center" aria-labelledby={`tab-${tabValue}`}>
             <AnimatePresence mode="wait">
                 {activeTab === tabValue && (
                     <motion.div
@@ -238,6 +235,7 @@ export function HeroContent({ params }: HeroContentProps) {
                         variants={tabContentVariants}
                         className="focus:outline-none"
                         ref={tabContentRef}
+                        role="tabpanel"
                     >
                         <Component hero={hero} />
                     </motion.div>
@@ -253,10 +251,9 @@ export function HeroContent({ params }: HeroContentProps) {
             </header>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <div 
-                    className={`relative mb-6 md:mb-8 ${
-                        isTabsSticky ? "sticky top-0 z-20 bg-white/95 shadow-md py-2 transition-all duration-300 backdrop-blur-sm" : ""
-                    }`}
+                <div
+                    className={`relative mb-6 md:mb-8 ${isTabsSticky ? "sticky top-0 z-20 bg-white/95 shadow-md py-2 transition-all duration-300 backdrop-blur-sm" : ""
+                        }`}
                 >
                     {/* Left scroll button - enhanced for better visibility */}
                     {scrollPosition.left && (
@@ -293,20 +290,19 @@ export function HeroContent({ params }: HeroContentProps) {
                         <TabsList className="flex md:grid w-full md:grid-cols-3 lg:grid-cols-7 gap-2 min-w-max rounded-[20px]">
                             {tabConfig.map((tab, index) => (
                                 <motion.div
-                                    key={index}
+                                    key={tab.value}
                                     variants={tabTriggerVariants}
                                     initial="inactive"
                                     animate={activeTab === tab.value ? "active" : "inactive"}
                                 >
                                     <TabsTrigger
-                                        
                                         value={tab.value}
-                                        id={`tab-${tab.value}`}
-                                        role="tab"
+                                        // id={`tab-${tab.value}`}
+                                        // role="tab"
                                         aria-selected={activeTab === tab.value}
                                         aria-controls={`tabpanel-${tab.value}`}
                                         aria-label={tab.ariaLabel}
-                                            onKeyDown={(e) => handleKeyDown(e, index)}
+
                                         className={`
                                             whitespace-nowrap transition-all duration-300 ease-in-out
                                             text-sm md:text-base px-3 py-2 md:px-4 md:py-2
@@ -317,7 +313,11 @@ export function HeroContent({ params }: HeroContentProps) {
                                             }
                                         `}
                                     >
-                                        <span className="flex items-center">
+                                        <span
+                                            className="flex items-center"
+                                            onKeyDown={(e) => handleKeyDown(e, index)}
+                                            tabIndex={0}
+                                        >
                                             {tab.icon} {tab.label}
                                         </span>
                                     </TabsTrigger>
@@ -337,13 +337,12 @@ export function HeroContent({ params }: HeroContentProps) {
 
                 {/* Mobile tab navigation indicators */}
                 <div className="flex justify-center mb-4 md:hidden">
-                    {tabConfig.map((tab, index) => (
+                    {tabConfig.map((tab, ) => (
                         <button
                             key={`indicator-${tab.value}`}
                             aria-label={`עבור ללשונית ${tab.label}`}
-                            className={`w-2 h-2 mx-1 rounded-full transition-colors duration-300 ${
-                                activeTab === tab.value ? "bg-lime-500" : "bg-lime-200"
-                            }`}
+                            className={`w-2 h-2 mx-1 rounded-full transition-colors duration-300 ${activeTab === tab.value ? "bg-lime-500" : "bg-lime-200"
+                                }`}
                             onClick={() => setActiveTab(tab.value)}
                         />
                     ))}
@@ -351,7 +350,7 @@ export function HeroContent({ params }: HeroContentProps) {
 
                 <div className="relative">
                     {/* Swipe instruction - shows briefly on mobile */}
-                    <motion.div 
+                    <motion.div
                         className="md:hidden text-center text-sm text-lime-600 mb-4"
                         initial={{ opacity: 0.8 }}
                         animate={{ opacity: 0 }}
