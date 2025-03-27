@@ -18,7 +18,6 @@ interface ExtendedFallenHero extends FallenHero {
 }
 
 export function ImpactTab({ hero }: ImpactTabProps) {
-  console.log()
   // Helper function to check if a story section has content
   const hasStoryContent = (story: string | undefined, teller: string | undefined, relation: string | undefined): boolean => {
     return (!!story && story.trim() !== "") || 
@@ -40,9 +39,9 @@ export function ImpactTab({ hero }: ImpactTabProps) {
           <Card key={index} className="shadow-md rounded-xl overflow-hidden border border-gray-100">
             <CardContent className="p-6">
               <div className="space-y-4">
-                <h2 className="text-lg font-bold text-gray-800 mb-2">
+                {/* <h2 className="text-lg font-bold text-gray-800 mb-2">
                   {index === 0 ? "סיפור השפעה" : "סיפור השפעה נוסף"}
-                </h2>
+                </h2> */}
                 
                 {(story.tellerName || story.relation) && (
                   <div className="text-right mb-3">
@@ -76,7 +75,7 @@ export function ImpactTab({ hero }: ImpactTabProps) {
   // Fallback to original implementation if using separate fields
   // Check if each story section has content
   const hasFirstStory = hasStoryContent(hero.impactStory, hero.impactStoryTeller, hero.impactStoryRelation);
-  const hasSecondStory = hasStoryContent(hero.additionalImpactStory, hero.additionalimpactStoryTeller, hero.additionalimpactStoryRelation);
+  const hasSecondStory = hasStoryContent(hero.additionalImpactStory, hero.additionalImpactStoryTeller, hero.additionalImpactStoryRelation);
 
   if (!hasFirstStory && !hasSecondStory) {
     return <div className="text-center py-8 text-gray-500">טרם הוזנו סיפורי השפעה</div>;
@@ -120,20 +119,20 @@ export function ImpactTab({ hero }: ImpactTabProps) {
         <Card className="shadow-md rounded-xl overflow-hidden border border-gray-100">
           <CardContent className="p-6">
             <div className="space-y-4">
-              <h2 className="text-lg font-bold text-gray-800 mb-2">סיפור השפעה נוסף</h2>
+              {/* <h2 className="text-lg font-bold text-gray-800 mb-2">סיפור השפעה נוסף</h2> */}
               
-              {(hero.additionalimpactStoryTeller || hero.additionalimpactStoryRelation) && (
+              {(hero.additionalImpactStoryTeller || hero.additionalImpactStoryRelation) && (
                 <div className="text-right mb-3">
-                  {hero.additionalimpactStoryTeller && hero.additionalimpactStoryRelation && (
-                    <p className="font-semibold text-gray-700">{hero.additionalimpactStoryTeller} • {hero.additionalimpactStoryRelation}</p>
+                  {hero.additionalImpactStoryTeller && hero.additionalImpactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.additionalImpactStoryTeller} • {hero.additionalImpactStoryRelation}</p>
                   )}
                   
-                  {hero.additionalimpactStoryTeller && !hero.additionalimpactStoryRelation && (
-                    <p className="font-semibold text-gray-700">{hero.additionalimpactStoryTeller}</p>
+                  {hero.additionalImpactStoryTeller && !hero.additionalImpactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.additionalImpactStoryTeller}</p>
                   )}
                   
-                  {!hero.additionalimpactStoryTeller && hero.additionalimpactStoryRelation && (
-                    <p className="font-semibold text-gray-700">{hero.additionalimpactStoryRelation}</p>
+                  {!hero.additionalImpactStoryTeller && hero.additionalImpactStoryRelation && (
+                    <p className="font-semibold text-gray-700">{hero.additionalImpactStoryRelation}</p>
                   )}
                 </div>
               )}

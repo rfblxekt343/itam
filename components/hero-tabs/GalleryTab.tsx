@@ -19,6 +19,7 @@ export function GalleryTab({ hero }: GalleryTabProps) {
   useEffect(() => {
    
     if (hero.fullName) {
+      console.log(hero.fullName)
       setIsLoading(true);
       const folderPath = `/images/heroes/${hero.fullName}`;
       const images = Array.from({ length: hero.photosNumber }, (_, i) => 

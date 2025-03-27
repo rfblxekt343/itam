@@ -10,14 +10,12 @@ export async function GET(
 
     if (!name || name === 'undefined' || name === 'null') {
       return NextResponse.json(
-        { error: 'Invalid hero ID' },
+        { error: 'Invalid hero name' },
         { status: 400 }
       );
     }
 
     const decodedName = decodeURIComponent(name).trim();
-
-
 
     // First try exact match
     let hero = await prisma.hero.findFirst({
@@ -84,100 +82,111 @@ export async function GET(
       );
     }
 
-
     console.log("hero data", hero)
 
-    // Create a transformed hero that matches the FallenHero interface
-    // Provide default values for missing fields
+    // Create a transformed hero that includes a stories array
     const transformedHero = {
       id: hero.id,
-      timestamp: hero.timestamp || new Date().toISOString(), // Default current time if missing
-      email: hero.email || "", // Default empty string if missing
+      timestamp: hero.timestamp,
+      email: hero.email,
+      fullName: hero.fullName,
       firstName: hero.fullName.split(' ')[0],
       lastName: hero.lastName || hero.fullName.split(' ').slice(1).join(' '),
-      fullName: hero.fullName,
-      gender: hero.gender || "",
-      birthDate: hero.birthDate || "",
-      rank: hero.rank || "",
-      unit: hero.unit || "",
-      role: hero.role || "",
-      fallLocation: hero.fallLocation || "", // Required field
-      dateOfFalling: hero.fallDate || "",
-      age: hero.age || 0,
-      city: hero.city || "",
-      biography: hero.biography || "",
-      instagramLink: hero.instagramLink,
-      specialTraining: hero.specialTraining || "",
-      operations: hero.operations || "",
-      commendations: hero.commendations,
+      gender: hero.gender,
+      birthDate: hero.birthDate,
+      age: hero.age,
+      city: hero.city,
+      biography: hero.biography || '',
+      instagramLink: hero.instagramLink || '',
+      rank: hero.rank,
+      unit: hero.unit,
+      role: hero.role,
+      fallLocation: hero.fallLocation,
+      dateOfFalling: hero.fallDate || '',
+      specialTraining: hero.specialTraining,
+      operations: hero.operations,
+      commendations: hero.commendations || '',
 
-      // Event details - required fields with defaults
-      eventDate: hero.eventDate || "",
-      eventTitle: hero.eventTitle || "",
-      eventDescription: hero.eventDescription || "",
-
-      // Personal preferences
-      favoriteSongs: hero.favoriteSongs || "",
-      favoriteBooks: hero.favoriteBooks || "",
-      favoriteMovies: hero.favoriteMovies || "",
-      favoritePlaces: hero.favoritePlaces || "",
-      quotes: hero.quotes || "",
-      leadingValues: hero.leadingValues || "",
-      hobbies: hero.hobbies || "",
-
+      // Stories array
       stories: [
         hero.story1Content && {
-          title: hero.story1Title || "",
+          title: hero.story1Title || '',
           content: hero.story1Content,
           tellerName: hero.story1TellerName,
           relation: hero.story1Relation
         },
         hero.story2Content && {
-          title: hero.story2Title || "",
+          title: hero.story2Title || '',
           content: hero.story2Content,
           tellerName: hero.story2TellerName,
           relation: hero.story2Relation
         },
         hero.story3Content && {
-          title: hero.story3Title || "",
+          title: hero.story3Title || '',
           content: hero.story3Content,
           tellerName: hero.story3TellerName,
           relation: hero.story3Relation
         },
         hero.story4Content && {
-          title: hero.story4Title || "",
+          title: hero.story4Title || '',
           content: hero.story4Content,
           tellerName: hero.story4TellerName,
           relation: hero.story4Relation
         },
         hero.story5Content && {
-          title: hero.story5Title || "",
+          title: hero.story5Title || '',
           content: hero.story5Content,
           tellerName: hero.story5TellerName,
           relation: hero.story5Relation
         }
       ].filter(Boolean),
 
-      // Instead of creating an impactStories array
-      impactStory: hero.impactStory || "",
-      impactStoryTeller: hero.impactStoryTeller || "",
-      impactStoryRelation: hero.impactStoryRelation || "",
-      additionalImpactStory: hero.additionalImpactStory || "",
-      additionalimpactStoryTeller: hero.additionalImpactStoryTeller || "",
-      additionalimpactStoryRelation: hero.additionalImpactStoryRelation || "",
+      // Events
+      eventDate: hero.eventDate,
+      eventTitle: hero.eventTitle,
+      eventDescription: hero.eventDescription,
+      eventMedia: hero.eventMedia,
 
+      eventDate2: hero.eventDate2 || '',
+      eventTitle2: hero.eventTitle2 || '',
+      eventDescription2: hero.eventDescription2 || '',
+      eventMedia2: hero.eventMedia2 || '',
+
+      eventDate3: hero.eventDate3 || '',
+      eventTitle3: hero.eventTitle3 || '',
+      eventDescription3: hero.eventDescription3 || '',
+      eventMedia3: hero.eventMedia3 || '',
+
+      // Personal preferences
+      favoriteSongs: hero.favoriteSongs,
+      favoriteBooks: hero.favoriteBooks,
+      favoriteMovies: hero.favoriteMovies,
+      favoritePlaces: hero.favoritePlaces,
+      quotes: hero.quotes,
+      leadingValues: hero.leadingValues,
+      hobbies: hero.hobbies,
+
+      // Impact stories
+      impactStory: hero.impactStory || '',
+      impactStoryTeller: hero.impactStoryTeller || '',
+      impactStoryRelation: hero.impactStoryRelation || '',
+      additionalImpactStory: hero.additionalImpactStory || '',
+      additionalImpactStoryTeller: hero.additionalImpactStoryTeller || '',
+      additionalImpactStoryRelation: hero.additionalImpactStoryRelation || '',
+
+      // Contact
       contact: hero.contactFullName ? {
         fullName: hero.contactFullName,
         email: hero.contactEmail,
         phone: hero.contactPhone
       } : null,
 
-      photos: hero.photos || "",
-      eventMedia: hero.eventMedia || "",
-      photosNumber: hero.photosNumber || 0,
+      photos: hero.photos,
+      //eventMedia: hero.eventMedia,
+      photosNumber: hero.photosNumber,
 
-      // Required by interface
-      version: hero.version || 1
+      // Version
+      version: hero.version
     };
 
     return NextResponse.json(transformedHero);

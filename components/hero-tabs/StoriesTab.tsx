@@ -8,6 +8,8 @@ interface StoriesTabProps {
 
 export function StoriesTab({ hero }: StoriesTabProps) {
   const stories = hero.stories || [];
+
+
   
   return (
     <div className="space-y-6">
