@@ -21,6 +21,9 @@ interface HeroContentProps {
     };
 }
 
+
+
+
 export function HeroContent({ params }: HeroContentProps) {
     const [hero, setHero] = useState<FallenHero | null>(null);
     const [error, setError] = useState<string | null>(null);
