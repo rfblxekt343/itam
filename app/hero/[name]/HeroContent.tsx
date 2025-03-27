@@ -181,10 +181,10 @@ export function HeroContent({ params }: HeroContentProps) {
     };
 
     // Handle keyboard navigation
-    const handleKeyDown = (e: React.KeyboardEvent, tabIndex: number) => {
+    const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
         if (e.key === 'ArrowLeft') {
             e.preventDefault();
-            const prevIndex = tabIndex > 0 ? tabIndex - 1 : tabConfig.length - 1;
+            const prevIndex = index > 0 ? index - 1 : tabConfig.length - 1;
             setActiveTab(tabConfig[prevIndex].value);
             const tabElements = tabsListRef.current?.querySelectorAll('[role="tab"]');
             if (tabElements && tabElements[prevIndex]) {
@@ -192,7 +192,7 @@ export function HeroContent({ params }: HeroContentProps) {
             }
         } else if (e.key === 'ArrowRight') {
             e.preventDefault();
-            const nextIndex = tabIndex < tabConfig.length - 1 ? tabIndex + 1 : 0;
+            const nextIndex = index < tabConfig.length - 1 ? index + 1 : 0;
             setActiveTab(tabConfig[nextIndex].value);
             const tabElements = tabsListRef.current?.querySelectorAll('[role="tab"]');
             if (tabElements && tabElements[nextIndex]) {
@@ -291,7 +291,7 @@ export function HeroContent({ params }: HeroContentProps) {
                         aria-label="מידע על הגיבור"
                     >
                         <TabsList className="flex md:grid w-full md:grid-cols-3 lg:grid-cols-7 gap-2 min-w-max rounded-[20px]">
-                            {tabConfig.map((tab, index:number) => (
+                            {tabConfig.map((tab, index) => (
                                 <motion.div
                                     key={index}
                                     variants={tabTriggerVariants}
@@ -299,6 +299,7 @@ export function HeroContent({ params }: HeroContentProps) {
                                     animate={activeTab === tab.value ? "active" : "inactive"}
                                 >
                                     <TabsTrigger
+                                        
                                         value={tab.value}
                                         id={`tab-${tab.value}`}
                                         role="tab"
