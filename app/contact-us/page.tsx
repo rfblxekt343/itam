@@ -87,7 +87,7 @@ const ContactUs = () => {
           className="inline-flex flex-row-reverse items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
-          מלא/י טופס להנצחת יקירך
+          מלא/י טופס להנצחת הגיבור שלך
         </a>
       </div>
       <p className="text-lg text-center mt-4 text-black">
