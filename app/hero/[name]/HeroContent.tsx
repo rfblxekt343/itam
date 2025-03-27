@@ -37,7 +37,7 @@ export function HeroContent({ params }: HeroContentProps) {
         { value: "milestones", icon: <Milestone className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "אבני דרך", ariaLabel: "אבני דרך" },
         { value: "world", icon: <Star className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "העולם שלו/ה", ariaLabel: "העולם של הגיבור" },
         { value: "impact", icon: <Users className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "השפעה על אחרים", ariaLabel: "השפעה על אחרים" },
-        { value: "gallery", icon: <Camera className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "גלריה", ariaLabel: "גלריית תמונות" },
+        { value: "gallery", icon: <Camera className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "תמונות", ariaLabel: "גלריית תמונות" },
         { value: "stories", icon: <BookOpen className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "סיפורים וזכרונות", ariaLabel: "סיפורים וזכרונות" },
         { value: "service", icon: <Medal className="mr-1 h-4 w-4 md:h-5 md:w-5" />, label: "שירות צבאי", ariaLabel: "פרטי שירות צבאי" },
     ];
