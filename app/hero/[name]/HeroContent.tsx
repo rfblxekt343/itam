@@ -291,9 +291,9 @@ export function HeroContent({ params }: HeroContentProps) {
                         aria-label="מידע על הגיבור"
                     >
                         <TabsList className="flex md:grid w-full md:grid-cols-3 lg:grid-cols-7 gap-2 min-w-max rounded-[20px]">
-                            {tabConfig.map((tab, index) => (
+                            {tabConfig.map((tab, _index:number) => (
                                 <motion.div
-                                    key={index}
+                                    key={tab.value}
                                     variants={tabTriggerVariants}
                                     initial="inactive"
                                     animate={activeTab === tab.value ? "active" : "inactive"}
@@ -305,7 +305,7 @@ export function HeroContent({ params }: HeroContentProps) {
                                         aria-selected={activeTab === tab.value}
                                         aria-controls={`tabpanel-${tab.value}`}
                                         aria-label={tab.ariaLabel}
-                                        onKeyDown={(e) => handleKeyDown(e, index)}
+                                            onKeyDown={(e) => handleKeyDown(e, index)}
                                         className={`
                                             whitespace-nowrap transition-all duration-300 ease-in-out
                                             text-sm md:text-base px-3 py-2 md:px-4 md:py-2
