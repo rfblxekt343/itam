@@ -291,9 +291,9 @@ export function HeroContent({ params }: HeroContentProps) {
                         aria-label="מידע על הגיבור"
                     >
                         <TabsList className="flex md:grid w-full md:grid-cols-3 lg:grid-cols-7 gap-2 min-w-max rounded-[20px]">
-                            {tabConfig.map((tab, _index:number) => (
+                            {tabConfig.map((tab, index:number) => (
                                 <motion.div
-                                    key={tab.value}
+                                    key={index}
                                     variants={tabTriggerVariants}
                                     initial="inactive"
                                     animate={activeTab === tab.value ? "active" : "inactive"}
