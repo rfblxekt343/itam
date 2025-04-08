@@ -6,9 +6,10 @@ import { useEffect, useState, useCallback } from "react";
 
 interface GalleryTabProps {
   hero: FallenHero;
+  imagePaths: string[];
 }
 
-export function GalleryTab({ hero }: GalleryTabProps) {
+export function GalleryTab({ hero,imagePaths  }: GalleryTabProps) {
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
@@ -19,13 +20,13 @@ export function GalleryTab({ hero }: GalleryTabProps) {
   useEffect(() => {
    
     if (hero.fullName) {
-      console.log(hero.fullName)
       setIsLoading(true);
-      const folderPath = `/images/heroes/${hero.fullName}`;
-      const images = Array.from({ length: hero.photosNumber }, (_, i) => 
-        `${folderPath}/photo${i + 1}.jpeg`
-      );
-      setPhotoUrls(images);
+      // const folderPath = `/images/heroes/${hero.fullName}`;
+      // const images = Array.from({ length: hero.photosNumber }, (_, i) => 
+      //   `${folderPath}/photo${i + 1}.jpeg`
+      // );
+      setPhotoUrls(imagePaths);
+     
       setCurrentIndex(0);
     }
   }, [hero]);

@@ -19,9 +19,16 @@ interface HeroContentProps {
     params: {
         name: string;
     };
+    initialImagePaths: string[];
 }
 
-export function HeroContent({ params }: HeroContentProps) {
+// Type for components that only need hero prop
+type HeroTabComponent = React.ComponentType<{ hero: FallenHero }>;
+
+// Type for gallery component that needs both hero and imagePaths
+type GalleryTabComponent = React.ComponentType<{ hero: FallenHero; imagePaths: string[] }>;
+
+export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
     const [hero, setHero] = useState<FallenHero | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +37,7 @@ export function HeroContent({ params }: HeroContentProps) {
     const tabsListRef = useRef<HTMLDivElement>(null);
     const tabContentRef = useRef<HTMLDivElement>(null);
     const [isTabsSticky, setIsTabsSticky] = useState(false);
+    const [imagePaths, setImagePaths] = useState<string[]>(initialImagePaths);
 
     // Define tab configuration in one place for easy management
     const tabConfig = [
@@ -222,8 +230,8 @@ export function HeroContent({ params }: HeroContentProps) {
         );
     }
 
-    // Function to render tab content with animation
-    const renderTabContent = (tabValue: string, Component: React.ComponentType<{ hero: FallenHero }>) => (
+    // Function to render regular tab content
+    const renderStandardTabContent = (tabValue: string, Component: HeroTabComponent) => (
         <TabsContent value={tabValue} className="outline-none text-center" aria-labelledby={`tab-${tabValue}`}>
             <AnimatePresence mode="wait">
                 {activeTab === tabValue && (
@@ -238,6 +246,28 @@ export function HeroContent({ params }: HeroContentProps) {
                         role="tabpanel"
                     >
                         <Component hero={hero} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </TabsContent>
+    );
+
+    // Special function to render gallery tab content
+    const renderGalleryTabContent = () => (
+        <TabsContent value="gallery" className="outline-none text-center" aria-labelledby="tab-gallery">
+            <AnimatePresence mode="wait">
+                {activeTab === "gallery" && (
+                    <motion.div
+                        key="gallery"
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={tabContentVariants}
+                        className="focus:outline-none"
+                        ref={tabContentRef}
+                        role="tabpanel"
+                    >
+                        <GalleryTab hero={hero} imagePaths={imagePaths} />
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -297,12 +327,9 @@ export function HeroContent({ params }: HeroContentProps) {
                                 >
                                     <TabsTrigger
                                         value={tab.value}
-                                        // id={`tab-${tab.value}`}
-                                        // role="tab"
                                         aria-selected={activeTab === tab.value}
                                         aria-controls={`tabpanel-${tab.value}`}
                                         aria-label={tab.ariaLabel}
-
                                         className={`
                                             whitespace-nowrap transition-all duration-300 ease-in-out
                                             text-sm md:text-base px-3 py-2 md:px-4 md:py-2
@@ -337,7 +364,7 @@ export function HeroContent({ params }: HeroContentProps) {
 
                 {/* Mobile tab navigation indicators */}
                 <div className="flex justify-center mb-4 md:hidden">
-                    {tabConfig.map((tab, ) => (
+                    {tabConfig.map((tab) => (
                         <button
                             key={`indicator-${tab.value}`}
                             aria-label={`עבור ללשונית ${tab.label}`}
@@ -359,13 +386,16 @@ export function HeroContent({ params }: HeroContentProps) {
                         החלק ימינה או שמאלה כדי לנווט בין הלשוניות
                     </motion.div>
 
-                    {renderTabContent("info", InfoTab)}
-                    {renderTabContent("milestones", MilestonesTab)}
-                    {renderTabContent("world", WorldTab)}
-                    {renderTabContent("impact", ImpactTab)}
-                    {renderTabContent("service", ServiceTab)}
-                    {renderTabContent("stories", StoriesTab)}
-                    {renderTabContent("gallery", GalleryTab)}
+                    {/* Standard tabs */}
+                    {renderStandardTabContent("info", InfoTab)}
+                    {renderStandardTabContent("milestones", MilestonesTab)}
+                    {renderStandardTabContent("world", WorldTab)}
+                    {renderStandardTabContent("impact", ImpactTab)}
+                    {renderStandardTabContent("service", ServiceTab)}
+                    {renderStandardTabContent("stories", StoriesTab)}
+                    
+                    {/* Gallery tab with special handling */}
+                    {renderGalleryTabContent()}
                 </div>
             </Tabs>
         </div>
