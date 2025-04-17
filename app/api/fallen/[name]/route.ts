@@ -181,7 +181,7 @@ export async function GET(
         phone: hero.contactPhone
       } : null,
 
-      photos: hero.photos,
+
       //eventMedia: hero.eventMedia,
       photosNumber: hero.photosNumber,
 

@@ -33,37 +33,37 @@ export function ServiceTab({ hero }: ServiceTabProps) {
       key: "rank",
       title: "דרגה",
       content: hero.rank,
-      colSpan: "col-span-1"
+      className: "col-span-12 md:col-span-6 lg:col-span-4"
     },
     {
       key: "unit",
       title: "יחידה",
       content: hero.unit,
-      colSpan: "col-span-1"
+      className: "col-span-12 md:col-span-6 lg:col-span-4"
     },
     {
       key: "role",
       title: "תפקיד",
       content: hero.role,
-      colSpan: "col-span-1"
+      className: "col-span-12 md:col-span-6 lg:col-span-4"
     },
     {
       key: "fallLocation",
       title: "מקום/אירוע הנפילה",
       content: hero.fallLocation,
-      colSpan: "col-span-1"
+      className: "col-span-12 md:col-span-6 lg:col-span-4"
     },
     {
       key: "dateOfFalling",
       title: "תאריך נפילה",
       content: formatDate(hero.dateOfFalling),
-      colSpan: "col-span-1"
+      className: "col-span-12 md:col-span-6 lg:col-span-4"
     },
     {
       key: "commendations",
-      title: 'צלש"ים והוכרות',
+      title: 'צל"שים והוקרות',
       content: hero.commendations,
-      colSpan: "col-span-1"
+      className: "col-span-12 md:col-span-6 lg:col-span-4"
     }
   ];
 
@@ -72,15 +72,20 @@ export function ServiceTab({ hero }: ServiceTabProps) {
 
   return (
     <Card className="bg-white shadow-lg rounded-2xl overflow-hidden">
-      <CardContent className="p-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <CardContent className="p-4 md:p-6 lg:p-8">
+        <div className="grid grid-cols-12 gap-4 md:gap-6">
           {validSections.map((section) => (
-            <div 
+            <div
               key={section.key}
-              className={`bg-gray-50 p-4 rounded-lg shadow-sm ${section.colSpan}`}
+              className={`bg-gray-50 p-4 rounded-lg shadow-sm ${section.className}`}
+              dir="rtl"
             >
-              <h3 className="text-lg font-bold text-gray-700 mb-1">{section.title}</h3>
-              <p className="text-gray-900">{section.key === "dateOfFalling" ? section.content : section.content}</p>
+              <h3 className="text-lg font-bold text-gray-700 mb-1 text-right">
+                {section.title}
+              </h3>
+              <p className="text-gray-900 text-right">
+                {section.content}
+              </p>
             </div>
           ))}
         </div>

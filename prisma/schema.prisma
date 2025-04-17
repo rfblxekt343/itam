@@ -55,12 +55,12 @@ model Hero {
   story5TellerName       String?   @map("סיפור 5 - שם מספר")
   story5Relation         String?   @map("סיפור 5 - הקשר לחלל")
   
-  photos                 String    @map("העלאת תמונות ( GIF, PNG ,JPG)")
+
   
-  eventDate              String    @map("תאריך האירוע")
-  eventTitle             String    @map("כותרת האירוע")
-  eventDescription       String    @map("תיאור")
-  eventMedia             String    @map("תמונה או סרטון")
+  eventDate              String?    @map("תאריך האירוע")
+  eventTitle             String?    @map("כותרת האירוע")
+  eventDescription       String?    @map("תיאור")
+  eventMedia             String?    @map("תמונה או סרטון")
   
   eventDate2             String?   @map("תאריך אירוע - 2")
   eventTitle2            String?   @map("כותרת אירוע - 2")
@@ -72,13 +72,13 @@ model Hero {
   eventDescription3      String?   @map("תיאור אירוע - 3")
   eventMedia3            String?   @map("תמונה או סרטון של אירוע 3")
   
-  favoriteSongs          String    @map("שירים שאהב/ה במיוחד ( יש לציין אם שם הזמר או המלחין)")
-  favoriteBooks          String    @map("ספרים משמעותיים עבורה")
-  favoriteMovies         String    @map("סרטים אהובים")
-  favoritePlaces         String    @map("מקומות אהובים ומשמעותיים")
-  quotes                 String    @map("ציטוטים ")
-  leadingValues          String    @map("ערכים מובילים")
-  hobbies                String    @map("תחביבים וכישרונות")
+  favoriteSongs          String?    @map("שירים שאהב/ה במיוחד ( יש לציין אם שם הזמר או המלחין)")
+  favoriteBooks          String?   @map("ספרים משמעותיים עבורה")
+  favoriteMovies         String?   @map("סרטים אהובים")
+  favoritePlaces         String?   @map("מקומות אהובים ומשמעותיים")
+  quotes                 String?   @map("ציטוטים ")
+  leadingValues          String?   @map("ערכים מובילים")
+  hobbies                String?   @map("תחביבים וכישרונות")
   
   impactStory            String?   @map("סיפור השפעה - 1")
   impactStoryTeller      String?   @map("שם המספר - 1")
