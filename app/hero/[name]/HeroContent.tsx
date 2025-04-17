@@ -25,9 +25,6 @@ interface HeroContentProps {
 // Type for components that only need hero prop
 type HeroTabComponent = React.ComponentType<{ hero: FallenHero }>;
 
-// Type for gallery component that needs both hero and imagePaths
-type GalleryTabComponent = React.ComponentType<{ hero: FallenHero; imagePaths: string[] }>;
-
 export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
     const [hero, setHero] = useState<FallenHero | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -37,7 +34,7 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
     const tabsListRef = useRef<HTMLDivElement>(null);
     const tabContentRef = useRef<HTMLDivElement>(null);
     const [isTabsSticky, setIsTabsSticky] = useState(false);
-    const [imagePaths, setImagePaths] = useState<string[]>(initialImagePaths);
+    const [imagePaths] = useState<string[]>(initialImagePaths);
 
     // Define tab configuration in one place for easy management
     const tabConfig = [

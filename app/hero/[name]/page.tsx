@@ -1,7 +1,6 @@
 // app/hero/[name]/page.tsx
 import { Suspense } from 'react';
 import path from 'path'; // Import path for resolving directory
-import fs from 'fs';  
 import { HeroContent } from './HeroContent';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { getHeroImagePaths } from '@/utils/imageUtils';
@@ -13,11 +12,8 @@ interface PageProps {
   params: { name: string };
 }
 
-
 export default async function HeroPage({ params }: PageProps) {
   const name = await params.name;
-
-
 
   if (!name || name === 'undefined') {
     return (
@@ -28,7 +24,6 @@ export default async function HeroPage({ params }: PageProps) {
         <div className="text-gray-600">
           אנא בדוק את הקישור ונסה שוב
         </div>
-
       </div>
     );
   }
@@ -47,11 +42,11 @@ export default async function HeroPage({ params }: PageProps) {
     );
     //console.log(`[Server Component] Found ${heroImageUrls.length} images for ${decodedName}. URLs:`, heroImageUrls);
 
-} catch (error) {
+  } catch (_) {
     //console.error(`[Server Component] Failed to get hero images for ${decodeURIComponent(name)}:`, error);
     // Keep heroImageUrls as [] on error, so GalleryTab shows "No images"
-}
-//console.log(`[Server Component] Hero image URLs:`, heroImageUrls);
+  }
+  //console.log(`[Server Component] Hero image URLs:`, heroImageUrls);
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <HeroContent params={{ name }} initialImagePaths={heroImageUrls} />
