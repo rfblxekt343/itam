@@ -42,8 +42,8 @@ export default async function HeroPage({ params }: PageProps) {
     );
     //console.log(`[Server Component] Found ${heroImageUrls.length} images for ${decodedName}. URLs:`, heroImageUrls);
 
-  } catch (_) {
-    //console.error(`[Server Component] Failed to get hero images for ${decodeURIComponent(name)}:`, error);
+  } catch {
+    //console.error(`[Server Component] Failed to get hero images for ${decodeURIComponent(name)}`);
     // Keep heroImageUrls as [] on error, so GalleryTab shows "No images"
   }
   //console.log(`[Server Component] Hero image URLs:`, heroImageUrls);
