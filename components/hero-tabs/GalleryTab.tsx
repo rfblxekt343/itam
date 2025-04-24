@@ -21,10 +21,7 @@ export function GalleryTab({ hero,imagePaths  }: GalleryTabProps) {
    
     if (hero.fullName) {
       setIsLoading(true);
-      // const folderPath = `/images/heroes/${hero.fullName}`;
-      // const images = Array.from({ length: hero.photosNumber }, (_, i) => 
-      //   `${folderPath}/photo${i + 1}.jpeg`
-      // );
+     
       setPhotoUrls(imagePaths);
      
       setCurrentIndex(0);

@@ -270,6 +270,26 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
             </AnimatePresence>
         </TabsContent>
     );
+    const renderStoriesTabContent = () => (
+        <TabsContent value="stories" className="outline-none text-center" aria-labelledby="tab-gallery">
+            <AnimatePresence mode="wait">
+                {activeTab === "stories" && (
+                    <motion.div
+                        key="stories"
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={tabContentVariants}
+                        className="focus:outline-none"
+                        ref={tabContentRef}
+                        role="tabpanel"
+                    >
+                        <StoriesTab hero={hero} imagePaths={imagePaths} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </TabsContent>
+    );
 
     return (
         <div className="text-lime-600 max-w-6xl mx-auto p-4 md:p-8" {...swipeHandlers}>
@@ -389,7 +409,7 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                     {renderStandardTabContent("world", WorldTab)}
                     {renderStandardTabContent("impact", ImpactTab)}
                     {renderStandardTabContent("service", ServiceTab)}
-                    {renderStandardTabContent("stories", StoriesTab)}
+                    {renderStoriesTabContent()}
                     
                     {/* Gallery tab with special handling */}
                     {renderGalleryTabContent()}
