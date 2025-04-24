@@ -4,21 +4,36 @@ import { FallenHero } from "@/types/fallen-hero";
 interface ServiceTabProps {
   hero: FallenHero;
 }
-
-export function formatDate(isoString: string): string {
-  // Create a date object from the ISO string
-  const date = new Date(isoString);
+function formatDate(dateString: string): string {
+  // Check if the date is already in DD/MM/YYYY format
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) {
+    // If it's already in the desired format, return it as is
+    return dateString;
+  }
   
-  // Add one day to the date
-  date.setUTCDate(date.getUTCDate() + 1);
-  
-  // Format the date using the Israeli locale
-  return date.toLocaleDateString("he-IL", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    timeZone: 'UTC',
-  });
+  try {
+    // Try to parse the ISO string
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return "תאריך לא תקין"; // "Invalid date" in Hebrew
+    }
+    
+    // Add one day to the date
+    date.setUTCDate(date.getUTCDate() + 1);
+    
+    // Format the date using the Israeli locale
+    return date.toLocaleDateString("he-IL", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: 'UTC',
+    });
+  } catch (error) {
+    console.error("Error formatting date:", error);
+    return "תאריך לא תקין"; // "Invalid date" in Hebrew
+  }
 }
 
 export function ServiceTab({ hero }: ServiceTabProps) {
