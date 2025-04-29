@@ -26,7 +26,7 @@ const AboutUs = () => {
       <div className="bg-white p-6 rounded-lg shadow-lg mb-10 border border-gray-200">
         <h2 className="text-2xl font-semibold mb-4 text-lime-500">מי אני?</h2>
         <p className="text-lg text-gray-800 leading-relaxed">
-          שמי עלמה לוי, בת 19, משרתת בחיל האוויר וחולמת לתרום לזיכרון הלאומי שלנו בדרך משמעותית.
+          שמי עלמה לוי, בת 20, משרתת בחיל האוויר וחולמת לתרום לזיכרון הלאומי שלנו בדרך משמעותית.
         </p>
         <p className="text-lg text-gray-800 leading-relaxed mt-3">
           הקמתי את הפרויקט הזה מתוך תחושת שליחות ורצון להציג פן אחר של תהליך ההנצחה - פן שחוגג את החיים, את האישיות הייחודית ואת התשוקות של כל אחד מהנופלים.
