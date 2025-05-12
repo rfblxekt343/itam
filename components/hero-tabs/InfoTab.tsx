@@ -110,7 +110,7 @@ export function InfoTab({ hero }: InfoTabProps) {
 
           {/* Biography Section */}
           <div className="md:col-span-2 space-y-2 bg-gray-50 p-6 rounded-lg">
-            <h3 className="text-lg font-bold text-gray-700 mb-2">{hero.gender === "נקבה" ? "עליה" : "עליו"}</h3>
+            <h3 className="text-lg font-bold text-gray-700 ">{hero.gender === "נקבה" ? "עליה" : "עליו"}</h3>
             <p className="text-gray-900 whitespace-pre-wrap leading-relaxed">{hero.biography}</p>
           </div>
         </div>

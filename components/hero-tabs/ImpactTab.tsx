@@ -30,6 +30,7 @@ export function ImpactTab({ hero }: ImpactTabProps) {
     const impactStories = (hero as ExtendedFallenHero).impactStories;
     
     if (!impactStories || impactStories.length === 0) {
+    
       return <div className="text-center py-8 text-gray-500">טרם הוזנו סיפורי השפעה</div>;
     }
 

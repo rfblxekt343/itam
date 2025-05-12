@@ -1,4 +1,3 @@
-// app/heroes/client-component.js
 'use client';
 
 import { useState } from 'react';
@@ -8,61 +7,61 @@ import { Search } from 'lucide-react';
 
 export default function ClientHeroesPage({ heroes }) {
   const [searchQuery, setSearchQuery] = useState('');
-  
-  // Filter heroes based on search query
-  const filteredHeroes = heroes.filter(hero => 
+
+  const filteredHeroes = heroes.filter(hero =>
     hero.fullName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-lime-600 text-3xl md:text-4xl font-extrabold text-center mb-6 text-gray-800">
+    <div className="container mx-auto px-4 py-10">
+      <h1 className="text-4xl font-extrabold text-center text-emerald-700 mb-8">
         הגיבורים
       </h1>
-      
-      {/* Search component */}
-      <div className="max-w-md mx-auto mb-8">
-        <div className="relative">
+
+      {/* Search Bar */}
+      <div className="max-w-md mx-auto mb-10">
+        <div className="relative shadow-sm">
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <Search className="h-5 w-5 text-gray-400" />
+            <Search className="h-5 w-5 text-slate-400" />
           </div>
           <input
             type="text"
-            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full pr-10 p-2.5 text-right"
             placeholder="חפש גיבור..."
+            dir="rtl"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            dir="rtl"
+            className="w-full pr-10 p-2.5 text-right text-slate-800 placeholder-slate-400 border border-emerald-200 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 bg-white shadow transition duration-200"
           />
         </div>
       </div>
-      
-      {/* Heroes grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+
+      {/* Heroes Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredHeroes.map((hero) => (
           <Link
-            href={`/hero/${encodeURIComponent(hero.fullName)}`}
             key={hero.id}
-            className="block transform transition-transform duration-300 hover:scale-105"
+            href={`/hero/${encodeURIComponent(hero.fullName)}`}
+            className="block group transition-transform duration-300 hover:scale-105"
           >
-            <div className="bg-lime-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden p-4 text-center relative">
-              {/* Badge */}
-              <div className="absolute top-0 right-0 bg-lime-500 text-white px-3 py-1 text-xs font-medium rounded-bl-lg">
+            <div className="relative bg-gradient-to-br from-emerald-50 to-indigo-50 rounded-2xl p-5 shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
+              {/* Top Badge */}
+              <div className="absolute top-0 right-0 bg-emerald-600 text-white px-3 py-1 text-xs font-medium rounded-bl-xl shadow">
                 לחץ לעמוד הגיבור
               </div>
-              
-              <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 mt-6">
+
+              <h2 className="text-xl font-semibold text-slate-800 mb-4 mt-6 group-hover:text-emerald-700 transition-colors">
                 {hero.fullName}
               </h2>
-              
+
+              {/* Hero Image */}
               <div className="flex justify-center">
-                <div className="relative">
+                <div className="relative w-[200px] h-[200px]">
                   <Image
                     src={`/images/heroes/${hero.fullName}/photo1.jpeg`}
                     alt={hero.fullName}
                     width={200}
                     height={200}
-                    className="rounded-lg object-contain w-[200px] h-[200px] shadow-sm"
+                    className="rounded-xl object-cover w-full h-full shadow-sm border border-emerald-100"
                   />
                 </div>
               </div>
@@ -70,9 +69,10 @@ export default function ClientHeroesPage({ heroes }) {
           </Link>
         ))}
       </div>
-      
+
+      {/* No Results Message */}
       {filteredHeroes.length === 0 && (
-        <div className="text-center text-gray-600 mt-12 text-lg">
+        <div className="text-center text-slate-600 mt-12 text-lg">
           לא נמצאו גיבורים התואמים את החיפוש
         </div>
       )}

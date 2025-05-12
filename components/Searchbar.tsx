@@ -94,14 +94,14 @@ const Searchbar = () => {
               text-gray-700 dark:text-gray-200
               placeholder-gray-500 dark:placeholder-gray-400
               transition-all duration-300 ease-in-out
-              focus:border-lime-500 dark:focus:border-lime-400
-              focus:ring-2 focus:ring-lime-200 dark:focus:ring-lime-800
+              focus:border-blue-500 dark:focus:border-blue-400
+              focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800
               ${isExpanded ? 'opacity-100' : 'opacity-0'}
               text-right
               dir="rtl"
             `}
           />
-          <button onClick={() => !isExpanded && setIsExpanded(true)} className="absolute right-0 p-3 text-gray-600 dark:text-gray-400 hover:text-lime-500 dark:hover:text-lime-400 transition-colors duration-300">
+          <button onClick={() => !isExpanded && setIsExpanded(true)} className="absolute right-0 p-3 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
             <Search size={20} />
           </button>
   

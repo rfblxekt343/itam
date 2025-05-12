@@ -17,7 +17,7 @@ model Hero {
   lastName               String?   @map("שם משפחה")
   gender                 String    @map("מגדר")
   birthDate              String    @map("תאריך לידה")
-  age                    Int       @map("גיל")
+  age                    Int?       @map("גיל")
   city                   String    @map("עיר מגורים")
   biography              String?   @map("ביוגרפיה")
   instagramLink          String?   @map("קישור לעמוד הנצחה באינסטגרם (אם קיים)")

@@ -82,7 +82,12 @@ export async function GET(
       );
     }
 
-    console.log("hero data", hero)
+    console.log("hero data", hero);
+
+    // Ensure age is a number
+    const age = hero.age ? 
+      (typeof hero.age === 'string' ? parseInt(hero.age, 10) : hero.age) : 
+      null;
 
     // Create a transformed hero that includes a stories array
     const transformedHero = {
@@ -94,7 +99,7 @@ export async function GET(
       lastName: hero.lastName || hero.fullName.split(' ').slice(1).join(' '),
       gender: hero.gender,
       birthDate: hero.birthDate,
-      age: hero.age,
+      age: age, // Use the converted age value
       city: hero.city,
       biography: hero.biography || '',
       instagramLink: hero.instagramLink || '',
@@ -181,8 +186,6 @@ export async function GET(
         phone: hero.contactPhone
       } : null,
 
-
-      //eventMedia: hero.eventMedia,
       photosNumber: hero.photosNumber,
 
       // Version

@@ -13,7 +13,7 @@ import { StoriesTab } from "@/components/hero-tabs/StoriesTab";
 import { GalleryTab } from "@/components/hero-tabs/GalleryTab";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSwipeable } from "react-swipeable"; // You'll need to install this package
+import { useSwipeable } from "react-swipeable";
 
 interface HeroContentProps {
     params: {
@@ -35,6 +35,7 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
     const tabContentRef = useRef<HTMLDivElement>(null);
     const [isTabsSticky, setIsTabsSticky] = useState(false);
     const [imagePaths] = useState<string[]>(initialImagePaths);
+    const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
 
     // Define tab configuration in one place for easy management
     const tabConfig = [
@@ -124,13 +125,15 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
         };
     }, []);
 
-    // Swipe handlers for mobile navigation
-    const swipeHandlers = useSwipeable({
-        onSwipedLeft: () => navigateTab('next'),
-        onSwipedRight: () => navigateTab('prev'),
-        touchEventOptions: { passive: false },
-        trackMouse: false
-    });
+    // Clear swipe direction indicator after animation
+    useEffect(() => {
+        if (swipeDirection) {
+            const timer = setTimeout(() => {
+                setSwipeDirection(null);
+            }, 500);
+            return () => clearTimeout(timer);
+        }
+    }, [swipeDirection]);
 
     // Navigate to previous or next tab
     const navigateTab = (direction: 'prev' | 'next') => {
@@ -138,9 +141,15 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
         let newIndex;
 
         if (direction === 'prev') {
-            newIndex = currentIndex > 0 ? currentIndex - 1 : tabConfig.length - 1;
+            newIndex = currentIndex > 0 ? currentIndex - 1 : currentIndex;
+            // Don't loop to the end, just stay at the first tab
+            if (currentIndex === 0) return;
+            setSwipeDirection('right');
         } else {
-            newIndex = currentIndex < tabConfig.length - 1 ? currentIndex + 1 : 0;
+            newIndex = currentIndex < tabConfig.length - 1 ? currentIndex + 1 : currentIndex;
+            // Don't loop to the beginning, just stay at the last tab
+            if (currentIndex === tabConfig.length - 1) return;
+            setSwipeDirection('left');
         }
 
         setActiveTab(tabConfig[newIndex].value);
@@ -152,13 +161,43 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                 tabElements[newIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         }
+
+        // Announce tab change for screen readers
+        const announceElement = document.getElementById('tab-change-announcement');
+        if (announceElement) {
+            announceElement.textContent = `מעבר ללשונית ${tabConfig[newIndex].label}`;
+        }
     };
+
+    // Enhanced swipe handlers with improved options
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => navigateTab('next'),
+        onSwipedRight: () => navigateTab('prev'),
+        preventScrollOnSwipe: true,
+        trackMouse: false,
+        delta: 50, // Minimum swipe distance to trigger action
+        swipeDuration: 500, // Maximum time in ms to swipe
+    });
 
     // Animation variants for tab content
     const tabContentVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
         exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" } }
+    };
+
+    // Swipe animation variants
+    const swipeAnimationVariants = {
+        left: { 
+            x: [-20, 0], 
+            opacity: [0.7, 1],
+            transition: { duration: 0.3 }
+        },
+        right: { 
+            x: [20, 0], 
+            opacity: [0.7, 1],
+            transition: { duration: 0.3 }
+        }
     };
 
     // Tab trigger animation variants
@@ -235,9 +274,13 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                     <motion.div
                         key={tabValue}
                         initial="hidden"
-                        animate="visible"
+                        animate={swipeDirection ? swipeDirection : "visible"}
                         exit="exit"
-                        variants={tabContentVariants}
+                        variants={{
+                            ...tabContentVariants,
+                            left: swipeAnimationVariants.left,
+                            right: swipeAnimationVariants.right
+                        }}
                         className="focus:outline-none"
                         ref={tabContentRef}
                         role="tabpanel"
@@ -257,9 +300,13 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                     <motion.div
                         key="gallery"
                         initial="hidden"
-                        animate="visible"
+                        animate={swipeDirection ? swipeDirection : "visible"}
                         exit="exit"
-                        variants={tabContentVariants}
+                        variants={{
+                            ...tabContentVariants,
+                            left: swipeAnimationVariants.left,
+                            right: swipeAnimationVariants.right
+                        }}
                         className="focus:outline-none"
                         ref={tabContentRef}
                         role="tabpanel"
@@ -270,16 +317,21 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
             </AnimatePresence>
         </TabsContent>
     );
+    
     const renderStoriesTabContent = () => (
-        <TabsContent value="stories" className="outline-none text-center" aria-labelledby="tab-gallery">
+        <TabsContent value="stories" className="outline-none text-center" aria-labelledby="tab-stories">
             <AnimatePresence mode="wait">
                 {activeTab === "stories" && (
                     <motion.div
                         key="stories"
                         initial="hidden"
-                        animate="visible"
+                        animate={swipeDirection ? swipeDirection : "visible"}
                         exit="exit"
-                        variants={tabContentVariants}
+                        variants={{
+                            ...tabContentVariants,
+                            left: swipeAnimationVariants.left,
+                            right: swipeAnimationVariants.right
+                        }}
                         className="focus:outline-none"
                         ref={tabContentRef}
                         role="tabpanel"
@@ -292,7 +344,15 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
     );
 
     return (
-        <div className="text-lime-600 max-w-6xl mx-auto p-4 md:p-8" {...swipeHandlers}>
+        <div className="text-emerald-600 max-w-6xl mx-auto p-4 md:p-8" {...swipeHandlers}>
+            {/* Hidden element for screen reader announcements */}
+            <div 
+                id="tab-change-announcement" 
+                className="sr-only" 
+                aria-live="polite" 
+                aria-atomic="true"
+            ></div>
+            
             <header className="text-center mb-6 md:mb-12">
                 <h1 className="text-3xl md:text-4xl font-bold mb-4">הכירו את {hero.fullName}</h1>
             </header>
@@ -307,7 +367,7 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                         <motion.button
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 shadow-md text-lime-600 hover:bg-lime-50 hover:text-lime-700 transition-all duration-200 md:hidden"
+                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 shadow-md text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200 md:hidden"
                             onClick={() => scrollTabs('left')}
                             aria-label="גלול לשמאל"
                         >
@@ -320,7 +380,7 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                         <motion.button
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 shadow-md text-lime-600 hover:bg-lime-50 hover:text-lime-700 transition-all duration-200 md:hidden"
+                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 shadow-md text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200 md:hidden"
                             onClick={() => scrollTabs('right')}
                             aria-label="גלול לימין"
                         >
@@ -350,10 +410,10 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                                         className={`
                                             whitespace-nowrap transition-all duration-300 ease-in-out
                                             text-sm md:text-base px-3 py-2 md:px-4 md:py-2
-                                            focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2
+                                            focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2
                                             ${activeTab === tab.value
-                                                ? "bg-lime-500 text-white shadow-md"
-                                                : "text-lime-600 hover:bg-lime-100 hover:text-lime-700 active:bg-lime-200"
+                                                ? "bg-emerald-500 text-white shadow-md"
+                                                : "text-emerald-600 hover:bg-emerald-100 hover:text-emerald-700 active:bg-emerald-200"
                                             }
                                         `}
                                     >
@@ -385,7 +445,7 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                         <button
                             key={`indicator-${tab.value}`}
                             aria-label={`עבור ללשונית ${tab.label}`}
-                            className={`w-2 h-2 mx-1 rounded-full transition-colors duration-300 ${activeTab === tab.value ? "bg-lime-500" : "bg-lime-200"
+                            className={`w-2 h-2 mx-1 rounded-full transition-colors duration-300 ${activeTab === tab.value ? "bg-emerald-500" : "bg-emerald-200"
                                 }`}
                             onClick={() => setActiveTab(tab.value)}
                         />
@@ -395,13 +455,43 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                 <div className="relative">
                     {/* Swipe instruction - shows briefly on mobile */}
                     <motion.div
-                        className="md:hidden text-center text-sm text-lime-600 mb-4"
+                        className="md:hidden text-center text-sm text-emerald-600 mb-4"
                         initial={{ opacity: 0.8 }}
                         animate={{ opacity: 0 }}
                         transition={{ delay: 2, duration: 1 }}
                     >
                         החלק ימינה או שמאלה כדי לנווט בין הלשוניות
                     </motion.div>
+
+                    {/* Visual swipe feedback indicators */}
+                    <AnimatePresence>
+                        {swipeDirection === 'left' && (
+                            <motion.div 
+                                className="fixed inset-y-0 left-0 flex items-center pointer-events-none z-30 md:hidden"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 0.5, x: 0 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="bg-emerald-500 text-white p-3 rounded-r-full shadow-lg">
+                                    <ChevronLeft size={24} />
+                                </div>
+                            </motion.div>
+                        )}
+                        {swipeDirection === 'right' && (
+                            <motion.div 
+                                className="fixed inset-y-0 right-0 flex items-center pointer-events-none z-30 md:hidden"
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 0.5, x: 0 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="bg-emerald-500 text-white p-3 rounded-l-full shadow-lg">
+                                    <ChevronRight size={24} />
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Standard tabs */}
                     {renderStandardTabContent("info", InfoTab)}
