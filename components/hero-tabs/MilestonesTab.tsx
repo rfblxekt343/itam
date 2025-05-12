@@ -1,5 +1,6 @@
 // import Image from "next/image";
 import Osher from "../../components/extraHeroes/Osher";
+import YoavDaniel from "../../components/extraHeroes/YoavDaniel";
 import { Card, CardContent } from "@/components/ui/card";
 import { FallenHero } from "@/types/fallen-hero";
 import { MdCalendarToday } from "react-icons/md"; // Calendar icon from react-icons
@@ -38,6 +39,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
 
   return (
     <>
+    
       {/* First Event */}
       {(hero.eventTitle || hero.eventDate || hero.eventDescription) && (
         <Card className="shadow-lg rounded-2xl overflow-hidden mb-8">
@@ -111,6 +113,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
           </CardContent>
         </Card>
       )}
+       {hero.fullName === "יואב דניאל" && <YoavDaniel/>}
 
       {/* Third Event */}
       {(hero.eventTitle3 || hero.eventDate3 || hero.eventDescription3) && (
@@ -141,6 +144,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
       )}
 
       {hero.fullName === "אושר (שמחה) ברזילי" && <Osher />}
+     
       {hero.fullName === "רז מזרחי" && <video
         src={`/videos/heroes/${hero.fullName}/video.mp4`}
         controls
