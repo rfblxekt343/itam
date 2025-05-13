@@ -47,6 +47,7 @@ export function InfoTab({ hero }: InfoTabProps) {
     <Card className="bg-white shadow-lg">
       <CardContent className="p-4 md:p-8">
         {/* Hero Image - Added at the top */}
+
         <div className="mb-6 flex justify-center">
 
           <div className="relative w-40 h-40 md:w-48 md:h-48 overflow-hidden rounded-lg shadow-md">
@@ -57,8 +58,20 @@ export function InfoTab({ hero }: InfoTabProps) {
               width={1920}  // You can replace this with the actual width you need
               height={1080}
             />
-          </div>
 
+          </div>
+          {hero.fullName === "יואב דניאל" && (
+            <div className="relative w-40 h-40 md:w-48 md:h-48 overflow-hidden rounded-lg shadow-md">
+              <Image
+                src={`/images/heroes/${hero.fullName}/WhatsApp Image 2025-05-12 at 14.49.18_6265a87b.jpg`}
+                alt={`תמונה של ${hero.fullName}`}
+                className="w-full h-auto object-cover"
+                width={1920}  // You can replace this with the actual width you need
+                height={1080}
+              />
+
+            </div>
+          )}
 
         </div>
 
@@ -111,20 +124,7 @@ export function InfoTab({ hero }: InfoTabProps) {
 
           )}
 
-{hero.fullName === "יואב דניאל" && (
-  <div className="flex justify-center items-center">
-    <div className="relative w-52 h-52 md:w-64 md:h-64 overflow-hidden rounded-xl shadow-lg transition-transform duration-300 ease-in-out hover:scale-105">
-      <Image
-        src={`/images/heroes/${hero.fullName}/WhatsApp Image 2025-05-12 at 14.49.18_6265a87b.jpg`}
-        alt={`תמונה של ${hero.fullName}`}
-        className="w-full h-full object-cover"
-        width={400}
-        height={400}
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-0 transition-all duration-300"></div>
-    </div>
-  </div>
-)}
+
           {/* Biography Section */}
           <div className="md:col-span-2 space-y-2 bg-gray-50 p-6 rounded-lg">
             <h3 className="text-lg font-bold text-gray-700 ">{hero.gender === "נקבה" ? "עליה" : "עליו"}</h3>
