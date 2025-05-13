@@ -463,35 +463,7 @@ export function HeroContent({ params, initialImagePaths }: HeroContentProps) {
                         החלק ימינה או שמאלה כדי לנווט בין הלשוניות
                     </motion.div>
 
-                    {/* Visual swipe feedback indicators */}
-                    <AnimatePresence>
-                        {swipeDirection === 'left' && (
-                            <motion.div 
-                                className="fixed inset-y-0 left-0 flex items-center pointer-events-none z-30 md:hidden"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 0.5, x: 0 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <div className="bg-emerald-500 text-white p-3 rounded-r-full shadow-lg">
-                                    <ChevronLeft size={24} />
-                                </div>
-                            </motion.div>
-                        )}
-                        {swipeDirection === 'right' && (
-                            <motion.div 
-                                className="fixed inset-y-0 right-0 flex items-center pointer-events-none z-30 md:hidden"
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 0.5, x: 0 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <div className="bg-emerald-500 text-white p-3 rounded-l-full shadow-lg">
-                                    <ChevronRight size={24} />
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+         
 
                     {/* Standard tabs */}
                     {renderStandardTabContent("info", InfoTab)}

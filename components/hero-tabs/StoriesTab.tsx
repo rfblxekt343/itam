@@ -9,7 +9,7 @@ interface StoriesTabProps {
 
 export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
   const stories = hero.stories || [];
-  console.log(imagePaths);
+
   
   // Filter images that contain "stories" in their path
   const storyImages = imagePaths.filter(path => path.includes("stories"));
