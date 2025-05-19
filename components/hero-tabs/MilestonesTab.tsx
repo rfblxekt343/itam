@@ -10,7 +10,17 @@ interface MilestonesTabProps {
 }
 
 export function formatDate(isoString: string): string {
+    const ddmmyyyyPattern = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+     if (ddmmyyyyPattern.test(isoString)) {
+    // It's already in the right format, so just return it
+    return isoString;
+  }
   const date = new Date(isoString);
+    // Check if date is valid
+  if (isNaN(date.getTime())) {
+    console.warn("Invalid date:", isoString);
+    return "תאריך לא תקין";
+  }
   return date.toLocaleDateString("he-IL", {
     day: "2-digit",
     month: "2-digit",
@@ -24,18 +34,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
     !hero.eventTitle3 && !hero.eventDate3 && !hero.eventDescription3) {
     return <p className="text-gray-700 text-center py-4">טרם הוזן מידע לעמוד זה</p>;
   }
-  console.log("Full hero data:", JSON.stringify(hero, null, 2));
-  console.log("Event 2 data:", {
-    title: hero.eventTitle2,
-    date: hero.eventDate2,
-    description: hero.eventDescription2
-  });
 
-  console.log("Event 3 data:", {
-    title: hero.eventTitle3,
-    date: hero.eventDate3,
-    description: hero.eventDescription3
-  });
 
   return (
     <>
@@ -72,6 +71,19 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   height={1080}
                 />
               }
+              {
+                hero.fullName === "הדר מרים כהן" && (
+                  <div className="flex justify-center w-full">
+                    <video
+                      src={`/videos/heroes/הדר מאיר כהן/hadar.mov`}
+                      controls
+                      className="w-full max-w-md h-auto rounded-lg shadow-md"
+                      style={{ aspectRatio: "16/9" }}
+                    />
+                  </div>
+                )
+              }
+
             </div>
           </CardContent>
         </Card>
@@ -109,6 +121,20 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   height={1080}
                 />
               }
+              {
+                hero.fullName === "הדר מרים כהן" && (
+                  <div className="flex justify-center w-full">
+                    <Image
+                      src={`/images/heroes/הדר מרים כהן/batmizva.jpeg`}
+                      alt={`תמונה של ${hero.fullName}`}
+                      className="w-full max-w-md h-auto object-cover rounded-lg shadow-md"
+                      width={1920}
+                      height={1080}
+                      style={{ aspectRatio: "16/9" }}
+                    />
+                  </div>
+                )
+              }
             </div>
           </CardContent>
         </Card>
@@ -138,6 +164,20 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   </p>
                 </div>
               )}
+              {
+                hero.fullName === "הדר מרים כהן" && (
+                  <div className="flex justify-center w-full">
+                    <Image
+                      src={`/images/heroes/הדר מרים כהן/tafkidhadar.jpeg`}
+                      alt={`תמונה של ${hero.fullName}`}
+                      className="w-full max-w-md h-auto object-cover rounded-lg shadow-md"
+                      width={1920}
+                      height={1080}
+                      
+                    />
+                  </div>
+                )
+              }
             </div>
           </CardContent>
         </Card>
