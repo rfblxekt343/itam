@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { FallenHero } from "@/types/fallen-hero";
 import Image from "next/image";
+import IdoBroyer from "@/components/extraHeroes/IdoBroyer";
 
 interface StoriesTabProps {
   hero: FallenHero;
@@ -10,13 +11,13 @@ interface StoriesTabProps {
 export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
   const stories = hero.stories || [];
 
-  
+
   // Filter images that contain "stories" in their path
   const storyImages = imagePaths.filter(path => path.includes("stories"));
 
   return (
     <div className="space-y-4">
-  
+
       {stories.length > 0 ? (
         stories.map((story, index) => (
           <Card key={index} className="shadow-md rounded-xl overflow-hidden border border-gray-100">
@@ -33,7 +34,7 @@ export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
                     />
                   </div>
                 )}
-                
+
                 {(story.tellerName || story.relation) && (
                   <div className="text-right mb-2 sm:mb-3">
                     {story.tellerName && story.relation && (
@@ -41,17 +42,17 @@ export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
                         <span className="text-gray-900">{story.tellerName}</span> • <span className="text-gray-700">{story.relation}</span>
                       </p>
                     )}
-                    
+
                     {story.tellerName && !story.relation && (
                       <p className="font-semibold text-sm sm:text-base text-gray-900">{story.tellerName}</p>
                     )}
-                    
+
                     {!story.tellerName && story.relation && (
                       <p className="font-semibold text-sm sm:text-base text-gray-700">{story.relation}</p>
                     )}
                   </div>
                 )}
-                
+
                 {story.content && (
                   <div className="bg-gray-50 p-3 sm:p-6 rounded-lg shadow-inner">
                     {story.content.split('\n\n').map((paragraph, i) => (
@@ -61,6 +62,9 @@ export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
                     ))}
                   </div>
                 )}
+                {hero.fullName === "עידו ברויר" && (
+                  <IdoBroyer imagePaths={imagePaths} />
+                )}
               </div>
             </CardContent>
           </Card>
@@ -68,8 +72,10 @@ export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
       ) : (
         <div className="text-center py-6 text-gray-500">לא נמצאו סיפורים</div>
       )}
-          {/* Display story images if any exist */}
-          {storyImages.length > 0 && (
+
+
+      {/* Display story images if any exist */}
+      {storyImages.length > 0 && (
         <Card className="shadow-md rounded-xl overflow-hidden border border-gray-100">
           <CardContent className="p-3 sm:p-6">
             <div className="grid grid-cols-1 gap-3">
