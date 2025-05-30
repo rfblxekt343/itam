@@ -65,6 +65,21 @@ export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
                 {hero.fullName === "עידו ברויר" && (
                   <IdoBroyer imagePaths={imagePaths} />
                 )}
+                { index === 1 && hero.fullName === "אליאב עמרם אביטבול" && (
+                  <div className="flex justify-center w-full">
+
+                    <a
+                      href="https://www.facebook.com/672812327/posts/10162051372352328/?mibextid=rS40aB7S9Ucbxw6v"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
+                     לחצו לצפייה
+                    </a>
+                  </div>
+                )
+              }
+
               </div>
             </CardContent>
           </Card>

@@ -33,16 +33,16 @@ export function ImpactTab({ hero }: ImpactTabProps) {
     
       return <div className="text-center py-8 text-gray-500">טרם הוזנו סיפורי השפעה</div>;
     }
+    console.log(hero.fullName, impactStories);
 
     return (
       <div className="space-y-6">
+        
         {impactStories.map((story: ImpactStory, index: number) => (
           <Card key={index} className="shadow-md rounded-xl overflow-hidden border border-gray-100">
             <CardContent className="p-6">
               <div className="space-y-4">
-                {/* <h2 className="text-lg font-bold text-gray-800 mb-2">
-                  {index === 0 ? "סיפור השפעה" : "סיפור השפעה נוסף"}
-                </h2> */}
+                
                 
                 {(story.tellerName || story.relation) && (
                   <div className="text-right mb-3">
@@ -65,10 +65,12 @@ export function ImpactTab({ hero }: ImpactTabProps) {
                     <p className="text-gray-700 whitespace-pre-line leading-relaxed">{story.content}</p>
                   </div>
                 )}
+                
               </div>
             </CardContent>
           </Card>
         ))}
+       
       </div>
     );
   }
@@ -111,6 +113,22 @@ export function ImpactTab({ hero }: ImpactTabProps) {
                   <p className="text-gray-700 whitespace-pre-line leading-relaxed" dir="rtl">{hero.impactStory}</p>
                 </div>
               )}
+               {
+                hero.fullName === "אליאב עמרם אביטבול" && (
+                  <div className="flex justify-center w-full">
+
+                    <a
+                      href="https://www.youtube.com/watch?v=0I878Lw7Jx8&t=44s"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
+                    לצפייה בסרטון
+                    </a>
+                  </div>
+                )
+              }
+
             </div>
           </CardContent>
         </Card>

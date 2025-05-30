@@ -10,13 +10,13 @@ interface MilestonesTabProps {
 }
 
 export function formatDate(isoString: string): string {
-    const ddmmyyyyPattern = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-     if (ddmmyyyyPattern.test(isoString)) {
+  const ddmmyyyyPattern = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+  if (ddmmyyyyPattern.test(isoString)) {
     // It's already in the right format, so just return it
     return isoString;
   }
   const date = new Date(isoString);
-    // Check if date is valid
+  // Check if date is valid
   if (isNaN(date.getTime())) {
     console.warn("Invalid date:", isoString);
     return "תאריך לא תקין";
@@ -38,7 +38,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
 
   return (
     <>
-    
+
       {/* First Event */}
       {(hero.eventTitle || hero.eventDate || hero.eventDescription) && (
         <Card className="shadow-lg rounded-2xl overflow-hidden mb-8">
@@ -80,6 +80,21 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                       className="w-full max-w-md h-auto rounded-lg shadow-md"
                       style={{ aspectRatio: "16/9" }}
                     />
+                  </div>
+                )
+              }
+              {
+                hero.fullName === "אליאב עמרם אביטבול" && (
+                  <div className="flex justify-center w-full">
+
+                    <a
+                      href="https://drive.google.com/drive/folders/1lL4m6e3Eo9LDn8tAv0qvbgxoYS8L5eYd"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
+                      קישור לסרטונים
+                    </a>
                   </div>
                 )
               }
@@ -139,7 +154,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
           </CardContent>
         </Card>
       )}
-       {hero.fullName === "יואב דניאל" && <YoavDaniel/>}
+      {hero.fullName === "יואב דניאל" && <YoavDaniel />}
 
       {/* Third Event */}
       {(hero.eventTitle3 || hero.eventDate3 || hero.eventDescription3) && (
@@ -173,7 +188,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                       className="w-full max-w-md h-auto object-cover rounded-lg shadow-md"
                       width={1920}
                       height={1080}
-                      
+
                     />
                   </div>
                 )
@@ -184,7 +199,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
       )}
 
       {hero.fullName === "אושר (שמחה) ברזילי" && <Osher />}
-     
+
       {hero.fullName === "רז מזרחי" && <video
         src={`/videos/heroes/${hero.fullName}/video.mp4`}
         controls
