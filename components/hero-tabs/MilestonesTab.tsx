@@ -98,6 +98,17 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   </div>
                 )
               }
+              {
+                hero.fullName === "אורי ג׳רבי" && (
+                    <Image
+                  src={`/images/heroes/אורי ג׳רבי/milestone.jpeg`}
+                  alt={`תמונה של ${hero.fullName}`}
+                  className="w-full h-auto object-cover"
+                  width={1920}  // You can replace this with the actual width you need
+                  height={1080}
+                />
+                )
+              }
 
             </div>
           </CardContent>
