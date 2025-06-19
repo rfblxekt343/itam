@@ -32,13 +32,11 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
   if (!hero.eventTitle && !hero.eventDate && !hero.eventDescription &&
     !hero.eventTitle2 && !hero.eventDate2 && !hero.eventDescription2 &&
     !hero.eventTitle3 && !hero.eventDate3 && !hero.eventDescription3) {
-    return <p className="text-gray-700 text-center py-4">טרם הוזן מידע לעמוד זה</p>;
+    return <p className="text-gray-700 text-center py-4" dir="rtl">טרם הוזן מידע לעמוד זה</p>;
   }
 
-
   return (
-    <>
-
+    <div dir="rtl" className="w-full">
       {/* First Event */}
       {(hero.eventTitle || hero.eventDate || hero.eventDescription) && (
         <Card className="shadow-lg rounded-2xl overflow-hidden mb-8">
@@ -46,18 +44,18 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
             <div className="flex flex-col gap-6">
               {/* Header section with date and title */}
               <div className="flex flex-col items-center justify-center gap-4 border-b border-gray-200 pb-4">
-                {hero.eventTitle && <div className="text-2xl font-bold text-gray-800">{hero.eventTitle}</div>}
+                {hero.eventTitle && <div className="text-2xl font-bold text-gray-800 text-right w-full">{hero.eventTitle}</div>}
                 {/* Date section with calendar icon */}
                 {hero.eventDate && <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full text-gray-700 font-medium">
-                  <MdCalendarToday size={20} /> {/* Calendar icon */}
+                  <MdCalendarToday size={20} />
                   <span>{formatDate(hero.eventDate)}</span>
                 </div>}
               </div>
 
-              {/* Event Description - Centered with multiple approaches */}
+              {/* Event Description */}
               {hero.eventDescription && (
                 <div className="w-full flex justify-center">
-                  <p className="text-gray-700 leading-relaxed text-center" style={{ maxWidth: "800px" }}>
+                  <p className="text-gray-700 leading-relaxed text-right" style={{ maxWidth: "800px" }}>
                     {hero.eventDescription}
                   </p>
                 </div>
@@ -67,7 +65,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   src={`/images/heroes/רון אפשטיין/photo3.jpeg`}
                   alt={`תמונה של ${hero.fullName}`}
                   className="w-full h-auto object-cover"
-                  width={1920}  // You can replace this with the actual width you need
+                  width={1920}
                   height={1080}
                 />
               }
@@ -104,7 +102,18 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   src={`/images/heroes/אורי ג׳רבי/milestone.jpeg`}
                   alt={`תמונה של ${hero.fullName}`}
                   className="w-full h-auto object-cover"
-                  width={1920}  // You can replace this with the actual width you need
+                  width={1920}
+                  height={1080}
+                />
+                )
+              }
+              {
+                hero.fullName === "אלמוג סרוסי" && (
+                    <Image
+                  src={`/images/heroes/אלמוג סרוסי/milestone.jpeg`}
+                  alt={`תמונה של ${hero.fullName}`}
+                  className="w-full h-auto object-cover"
+                  width={1920}
                   height={1080}
                 />
                 )
@@ -120,20 +129,16 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
         <Card className="shadow-lg rounded-2xl overflow-hidden mb-8">
           <CardContent className="p-8">
             <div className="flex flex-col gap-6">
-              {/* Header section with date and title */}
               <div className="flex flex-col items-center justify-center gap-4 border-b border-gray-200 pb-4">
-                {hero.eventTitle2 && <div className="text-2xl font-bold text-gray-800">{hero.eventTitle2}</div>}
-                {/* Date section with calendar icon */}
+                {hero.eventTitle2 && <div className="text-2xl font-bold text-gray-800 text-right w-full">{hero.eventTitle2}</div>}
                 {hero.eventDate2 && <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full text-gray-700 font-medium">
-                  <MdCalendarToday size={20} /> {/* Calendar icon */}
+                  <MdCalendarToday size={20} />
                   <span>{formatDate(hero.eventDate2)}</span>
                 </div>}
               </div>
-
-              {/* Event Description - Centered with multiple approaches */}
               {hero.eventDescription2 && (
                 <div className="w-full flex justify-center">
-                  <p className="text-gray-700 leading-relaxed text-center" style={{ maxWidth: "800px" }}>
+                  <p className="text-gray-700 leading-relaxed text-right" style={{ maxWidth: "800px" }}>
                     {hero.eventDescription2}
                   </p>
                 </div>
@@ -143,7 +148,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   src={`/images/heroes/רון אפשטיין/zofim.jpeg`}
                   alt={`תמונה של ${hero.fullName}`}
                   className="w-full h-auto object-cover"
-                  width={1920}  // You can replace this with the actual width you need
+                  width={1920}
                   height={1080}
                 />
               }
@@ -161,10 +166,23 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   </div>
                 )
               }
+               {
+                hero.fullName === "אלמוג סרוסי" && (
+                  <div className="flex justify-center w-full">
+                    <video
+                      src={`/videos/heroes/אלמוג סרוסי/milestone.mov`}
+                      controls
+                      className="w-full max-w-md h-auto rounded-lg shadow-md"
+                      style={{ aspectRatio: "16/9" }}
+                    />
+                  </div>
+                )
+              }
             </div>
           </CardContent>
         </Card>
       )}
+
       {hero.fullName === "יואב דניאל" && <YoavDaniel />}
 
       {/* Third Event */}
@@ -172,20 +190,16 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
         <Card className="shadow-lg rounded-2xl overflow-hidden mb-8">
           <CardContent className="p-8">
             <div className="flex flex-col gap-6">
-              {/* Header section with date and title */}
               <div className="flex flex-col items-center justify-center gap-4 border-b border-gray-200 pb-4">
-                {hero.eventTitle3 && <div className="text-2xl font-bold text-gray-800">{hero.eventTitle3}</div>}
-                {/* Date section with calendar icon */}
+                {hero.eventTitle3 && <div className="text-2xl font-bold text-gray-800 text-right w-full">{hero.eventTitle3}</div>}
                 {hero.eventDate3 && <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full text-gray-700 font-medium">
-                  <MdCalendarToday size={20} /> {/* Calendar icon */}
+                  <MdCalendarToday size={20} />
                   <span>{formatDate(hero.eventDate3)}</span>
                 </div>}
               </div>
-
-              {/* Event Description - Centered with multiple approaches */}
               {hero.eventDescription3 && (
                 <div className="w-full flex justify-center">
-                  <p className="text-gray-700 leading-relaxed text-center" style={{ maxWidth: "800px" }}>
+                  <p className="text-gray-700 leading-relaxed text-right" style={{ maxWidth: "800px" }}>
                     {hero.eventDescription3}
                   </p>
                 </div>
@@ -216,6 +230,6 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
         controls
         className="w-full h-auto"
       />}
-    </>
+    </div>
   );
 }
