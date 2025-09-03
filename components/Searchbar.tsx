@@ -48,7 +48,7 @@ const Searchbar = () => {
       });
     } catch (error) {
       console.error('Search error:', error)
-      setError('חיפוש נכשל. אנא נסה שוב.')
+      setError('לא נמצאה תוצאת חיפוש לשם זה')
       setResults([])
     } finally {
       setIsSearching(false)
