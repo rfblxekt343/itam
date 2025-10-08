@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FallenHero } from "@/types/fallen-hero";
 import Image from "next/image";
 import IdoBroyer from "@/components/extraHeroes/IdoBroyer";
+import AdiDanan from "@/components/extraHeroes/AdiDanan";
 
 interface StoriesTabProps {
   hero: FallenHero;
@@ -79,7 +80,7 @@ export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
                   </div>
                 )
               }
-
+              
               </div>
             </CardContent>
           </Card>
@@ -109,7 +110,12 @@ export function StoriesTab({ hero, imagePaths }: StoriesTabProps) {
           </CardContent>
         </Card>
       )}
+ {
+                hero.fullName === "עדי דנן" && (
+                  <AdiDanan />
 
+                )
+              }
     </div>
   );
 }

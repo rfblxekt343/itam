@@ -131,6 +131,21 @@ export function InfoTab({ hero }: InfoTabProps) {
             <p className="text-gray-900 whitespace-pre-wrap leading-relaxed">{hero.biography}</p>
           </div>
         </div>
+         {
+                hero.fullName === "עדי דנן" && (
+                  <div className="flex justify-center w-full">
+                    <video
+                      src={`/videos/heroes/עדי דנן/milestone.mov`}
+                      controls
+                      className="w-full max-w-md h-auto rounded-lg shadow-md"
+                      style={{ aspectRatio: "16/9" }}
+                    />
+
+
+                  </div>
+
+                )
+              }
       </CardContent>
     </Card>
   );

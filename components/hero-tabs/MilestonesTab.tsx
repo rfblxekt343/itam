@@ -98,26 +98,27 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
               }
               {
                 hero.fullName === "אורי ג׳רבי" && (
-                    <Image
-                  src={`/images/heroes/אורי ג׳רבי/milestone.jpeg`}
-                  alt={`תמונה של ${hero.fullName}`}
-                  className="w-full h-auto object-cover"
-                  width={1920}
-                  height={1080}
-                />
+                  <Image
+                    src={`/images/heroes/אורי ג׳רבי/milestone.jpeg`}
+                    alt={`תמונה של ${hero.fullName}`}
+                    className="w-full h-auto object-cover"
+                    width={1920}
+                    height={1080}
+                  />
                 )
               }
               {
                 hero.fullName === "אלמוג סרוסי" && (
-                    <Image
-                  src={`/images/heroes/אלמוג סרוסי/milestone.jpeg`}
-                  alt={`תמונה של ${hero.fullName}`}
-                  className="w-full h-auto object-cover"
-                  width={1920}
-                  height={1080}
-                />
+                  <Image
+                    src={`/images/heroes/אלמוג סרוסי/milestone.jpeg`}
+                    alt={`תמונה של ${hero.fullName}`}
+                    className="w-full h-auto object-cover"
+                    width={1920}
+                    height={1080}
+                  />
                 )
               }
+             
 
             </div>
           </CardContent>
@@ -166,7 +167,7 @@ export function MilestonesTab({ hero }: MilestonesTabProps) {
                   </div>
                 )
               }
-               {
+              {
                 hero.fullName === "אלמוג סרוסי" && (
                   <div className="flex justify-center w-full">
                     <video
